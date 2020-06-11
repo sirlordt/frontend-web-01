@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  HashRouter
+} from "react-router-dom";
+import {
+  Provider
+} from "react-redux";
+
+import {
+  I18nextProvider
+} from "react-i18next";
+import i18n from "./config/i18n.config";
+
+import "./utils/icons";
+
+import mainStore from "./redux/store";
+
+import "./App.scss";
+import Loading from "./components/loading";
+
+const RootPage = React.lazy( () => import( "./pages/root" ) );
+
+if ( process.env.REACT_APP_DEBUG !== "-" ) {
+
+  localStorage.setItem( "debug", process.env.REACT_APP_DEBUG || '' );
+
+}
+else {
+
+  localStorage.removeItem( "debug" );
+
+}
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={ mainStore }>
+      <I18nextProvider i18n={ i18n }>
+        <HashRouter>
+          <React.Suspense fallback={ <Loading /> }>
+            <RootPage />
+          </React.Suspense>
+        </HashRouter>
+      </I18nextProvider>
+    </Provider>
   );
+
 }
 
 export default App;

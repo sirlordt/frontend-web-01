@@ -1,0 +1,55 @@
+// Variable overrides
+
+/*
+
+../../node_modules/@coreui/coreui-pro/scss/themes/legacy/variables/_colors.scss
+
+$primary__lt:    #20a8d8 !default;
+$secondary__lt:  #c8ced3 !default;
+$success__lt:    #4dbd74 !default;
+$info__lt:       #63c2de !default;
+$warning__lt:    #ffc107 !default;
+$danger__lt:     #f86c6b !default;
+$light__lt:      #f0f3f5 !default;
+$dark__lt:       #2f353a !default;
+
+*/
+
+$theme-colors: (
+
+  "primary": #f73145,
+  "secondary": #c8cde3,
+  "success": #a04592,
+  "danger": #ffa330,
+  "warning": #42b029,
+  "info": #00969f,
+
+);
+
+/*
+
+../../node_modules/@coreui/coreui-pro/scss/themes/dark/variables/_colors.scss
+
+$primary__dt:    desaturate($primary, 20%) !default;
+$secondary__dt:  desaturate($secondary, 20%) !default;
+$success__dt:    desaturate($success, 20%) !default;
+$info__dt:       desaturate($info, 20%) !default;
+$warning__dt:    desaturate($warning, 20%) !default;
+$danger__dt:     desaturate($danger, 20%) !default;
+$light__dt:      $gray-700__dt !default;
+$dark__dt:       $gray-900__dt !default;
+*/
+
+$primary__dt: desaturate( map-get( $theme-colors, "primary" ), 40% );
+$secondary__dt: desaturate( map-get( $theme-colors, "secondary" ), 40% );
+// desaturate($primary, 20%) !default;
+
+//$custom_primary: map-get( $theme-colors, "primary" );
+//$custom_secondary: map-get( $theme-colors, "secondary" );
+
+$theme-colors__dt: (
+
+  "primary": $primary__dt,
+  "secondary": $secondary__dt
+
+);
