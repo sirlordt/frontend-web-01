@@ -12,6 +12,8 @@ import {
 
 import ScrollBars from "react-scrollbars-custom";
 
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+
 import {
   connect
 } from "react-redux";
@@ -76,6 +78,8 @@ class ChangeBackendServerModal extends Component {
     this.selectedItem = null; //React.createRef();
     this.selectedIndex = 0;
 
+    this.itemList = [];
+
   }
 
   // We append the created div to the div#modal
@@ -96,7 +100,7 @@ class ChangeBackendServerModal extends Component {
 
   }
 
-  componentDidUpdate( prevProps ) {
+  componentDidUpdate( prevProps, prevState ) {
 
     if ( prevProps.showMe !== this.props.showMe ) {
 
@@ -106,18 +110,23 @@ class ChangeBackendServerModal extends Component {
 
       }
 
+    }
+
+    if ( prevProps.showMe !== this.props.showMe ||
+         prevState.selectedBackendServer !== this.state.selectedBackendServer ) {
+
       setTimeout( () => {
 
         if ( this.selectedItem ) {
 
           this.selectedItem.focus();
-          this.selectedItem.scrollIntoView( false );
+          //this.selectedItem.scrollIntoView( false );
 
           //console.log( this.selectedIndex );
 
         }
 
-      }, 100 );
+      }, 10 );
 
     }
 
@@ -130,6 +139,45 @@ class ChangeBackendServerModal extends Component {
   componentWillUnmount() {
 
     modalRoot.removeChild( this.element );
+
+  }
+
+  onListKeyPressed = ( key, event ) => {
+
+    //{ ( key, event ) => console.log(`do something upon keydown event of ${key}`)}
+    if ( key === "down" && this.selectedIndex + 1 < this.itemList.length ) {
+
+      this.onSelectBackendServer( this.itemList[ this.selectedIndex + 1 ] );
+
+      /*
+      if ( this.selectedItem.nextSibling ) {
+
+        this.selectedItem.nextSibling.focus();
+
+      }
+      /*
+      this.setState( ( prevState ) => ( {
+
+        selectedIndex: prevState.selectedIndex + 1,
+        selectedItem: this.state.itemList[ prevState.selectedIndex + 1 ],
+
+      } ) );
+      */
+
+    }
+    else if ( key === "up" && this.selectedIndex - 1 >= 0 ) {
+
+      this.onSelectBackendServer( this.itemList[ this.selectedIndex - 1 ] );
+
+      /*
+      if ( this.selectedItem.previousSibling ) {
+
+        this.selectedItem.previousSibling.focus();
+
+      }
+      */
+
+    }
 
   }
 
@@ -190,6 +238,8 @@ class ChangeBackendServerModal extends Component {
 
   render() {
 
+    this.itemList = [];
+
     const connectionNames = Object.keys( this.props.backend.servers );
 
     return createPortal( (
@@ -237,106 +287,118 @@ class ChangeBackendServerModal extends Component {
                 className: "scrollbars-track-vertical-custom"
               } }>
 
-              <CListGroup className="">
+              <KeyboardEventHandler
+                handleKeys={ [ 'up', 'down' ] }
+                onKeyEvent={ this.onListKeyPressed } >
 
-                {
+                <CListGroup className="">
 
-                  connectionNames.map( ( connectionName, index ) => {
+                  {
 
-                    const serverInfo = this.props.backend.servers[ connectionName ];
+                    connectionNames.map( ( strBackendCode, intIndex ) => {
 
-                    return (
+                      const serverInfo = this.props.backend.servers[ strBackendCode ];
 
-                      <CListGroupItem
-                        href="#"
-                        className="border-0 custom-border-bottom-item cursor-pointer outline-0"
-                        key={ connectionName }
-                        action
-                        active={ this.state.selectedBackendServer === connectionName }
-                        onClick={ () => this.onSelectBackendServer( connectionName ) }
-                        innerRef={ ( element ) => {
+                      return (
 
-                          if ( this.state.selectedBackendServer === connectionName ) {
+                        <CListGroupItem
+                          href="#"
+                          className="border-0 custom-border-bottom-item cursor-pointer outline-0"
+                          key={ strBackendCode }
+                          action
+                          active={ this.state.selectedBackendServer === strBackendCode }
+                          onClick={ () => this.onSelectBackendServer( strBackendCode ) }
+                          innerRef={ ( element ) => {
 
-                            this.selectedItem = element;
-                            this.selectedIndex = index;
+                            if ( this.state.selectedBackendServer === strBackendCode ) {
 
-                          }
+                              this.selectedItem = element;
+                              this.selectedIndex = intIndex;
 
-                        } }
-                      >
+                            }
 
-                        <div className="d-flex align-items-center">
+                          } }
+                        >
 
-                          <FontAwesomeIcon icon={ serverInfo.icon } size="2x" />
+                          {
 
-                          <span className="d-inline-block ml-2">
-
-                            { `${serverInfo.name}` }
-
-                          </span>
-
-                        </div>
-
-                      </CListGroupItem>
-
-                    );
-
-                  } )
-
-                  /*
-                  languages.map( ( languageInfo, index ) => {
-
-                    return (
-
-                      <CListGroupItem
-                        href="#"
-                        className="border-0 custom-border-bottom-item cursor-pointer outline-0"
-                        key={ languageInfo.code }
-                        action
-                        active={ this.state.selectedBackendServer === languageInfo.code }
-                        onClick={ () => this.onSelectBackendServer( languageInfo.code ) }
-                        innerRef={ ( element ) => {
-
-                          if ( this.state.selectedBackendServer === languageInfo.code ) {
-
-                            this.selectedItem = element;
-                            this.selectedIndex = index;
+                            this.itemList.push( serverInfo.code ) ? null: null
 
                           }
 
-                        } }
-                      >
+                          <div className="d-flex align-items-center">
 
-                        <div className="d-flex align-items-center">
+                            <FontAwesomeIcon icon={ serverInfo.icon } size="2x" />
 
-                          <img
-                            alt={ languageInfo.country }
-                            className="d-inline-block"
-                            style={ {
-                              width: "40px", height: "40px"
-                            } }
-                            src={ `${process.env.PUBLIC_URL}${languageInfo.flag}` }
-                          />
+                            <span className="d-inline-block ml-2">
 
-                          <span className="d-inline-block ml-2">
+                              { `${serverInfo.name}` }
 
-                            { `${languageInfo.name} (${languageInfo.country})` }
+                            </span>
 
-                          </span>
+                          </div>
 
-                        </div>
+                        </CListGroupItem>
 
-                      </CListGroupItem>
+                      );
 
-                    );
+                    } )
 
-                  } )
-                  */
+                    /*
+                    languages.map( ( languageInfo, index ) => {
 
-                }
+                      return (
 
-              </CListGroup>
+                        <CListGroupItem
+                          href="#"
+                          className="border-0 custom-border-bottom-item cursor-pointer outline-0"
+                          key={ languageInfo.code }
+                          action
+                          active={ this.state.selectedBackendServer === languageInfo.code }
+                          onClick={ () => this.onSelectBackendServer( languageInfo.code ) }
+                          innerRef={ ( element ) => {
+
+                            if ( this.state.selectedBackendServer === languageInfo.code ) {
+
+                              this.selectedItem = element;
+                              this.selectedIndex = index;
+
+                            }
+
+                          } }
+                        >
+
+                          <div className="d-flex align-items-center">
+
+                            <img
+                              alt={ languageInfo.country }
+                              className="d-inline-block"
+                              style={ {
+                                width: "40px", height: "40px"
+                              } }
+                              src={ `${process.env.PUBLIC_URL}${languageInfo.flag}` }
+                            />
+
+                            <span className="d-inline-block ml-2">
+
+                              { `${languageInfo.name} (${languageInfo.country})` }
+
+                            </span>
+
+                          </div>
+
+                        </CListGroupItem>
+
+                      );
+
+                    } )
+                    */
+
+                  }
+
+                </CListGroup>
+
+              </KeyboardEventHandler>
 
             </ScrollBars>
 

@@ -1,5 +1,6 @@
+import axios from "axios";
+
 //import CommonUtilities from "../utils/commonUtilities";
-const axios = require( "axios" );
 
 const debug = require( "debug" )( "V1SystemSecurityAuthenticationService" );
 
@@ -41,11 +42,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login";
 
-      strRequestURI += "/v1/system/security/authentication/login";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {
@@ -61,7 +60,7 @@ class V1SystemSecurityAuthenticationService {
           }
         };
 
-      result.output.Backend = backend.backend; //Transfer back the backend for this login
+      result.output.Backend = backend.code; //Transfer back the backend for this login
 
       options.body = body;
 
@@ -117,11 +116,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/token/check";
 
-      strRequestURI += "/v1/system/security/authentication/token/check";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {
@@ -189,11 +186,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/logout";
 
-      strRequestURI += "/v1/system/security/authentication/logout";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {

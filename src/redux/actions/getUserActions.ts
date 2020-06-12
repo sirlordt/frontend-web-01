@@ -2,7 +2,7 @@ import {
   _GET_USER_ACTIONS_SUCCESS,
   _GET_USER_ACTIONS_FAILED
 } from "../constants";
-import backendClient from "../../services/backendClient";
+import backendClient from "../../services/systemBackendClient";
 
 function getUserActions( payload: any ): any {
 

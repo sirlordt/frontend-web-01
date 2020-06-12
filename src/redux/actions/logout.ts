@@ -2,7 +2,7 @@ import {
   _LOGOUT_SUCCESS,
   _LOGOUT_FAILED
 } from "../constants";
-import backendClient from "../../services/backendClient";
+import backendClient from "../../services/systemBackendClient";
 
 function logout( payload: any ) {
 

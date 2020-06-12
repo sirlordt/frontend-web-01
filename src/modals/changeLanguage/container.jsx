@@ -12,6 +12,8 @@ import {
 
 import ScrollBars from "react-scrollbars-custom";
 
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+
 import {
   connect
 } from "react-redux";
@@ -80,6 +82,8 @@ class ChangeLanguageModal extends Component {
     this.selectedItem = null; //React.createRef();
     this.selectedIndex = 0;
 
+    this.itemList = [];
+
   }
 
   // We append the created div to the div#modal
@@ -100,7 +104,7 @@ class ChangeLanguageModal extends Component {
 
   }
 
-  componentDidUpdate( prevProps ) {
+  componentDidUpdate( prevProps, prevState ) {
 
     if ( prevProps.showMe !== this.props.showMe ) {
 
@@ -110,18 +114,23 @@ class ChangeLanguageModal extends Component {
 
       }
 
+    }
+
+    if ( prevProps.showMe !== this.props.showMe ||
+         prevState.selectedLanguage !== this.state.selectedLanguage ) {
+
       setTimeout( () => {
 
         if ( this.selectedItem ) {
 
           this.selectedItem.focus();
-          this.selectedItem.scrollIntoView( false );
+          //this.selectedItem.scrollIntoView( false );
 
           //console.log( this.selectedIndex );
 
         }
 
-      }, 100 );
+      }, 10 );
 
     }
 
@@ -134,6 +143,45 @@ class ChangeLanguageModal extends Component {
   componentWillUnmount() {
 
     modalRoot.removeChild( this.element );
+
+  }
+
+  onListKeyPressed = ( key, event ) => {
+
+    //{ ( key, event ) => console.log(`do something upon keydown event of ${key}`)}
+    if ( key === "down" && this.selectedIndex + 1 < this.itemList.length ) {
+
+      this.onSelectLanguage( this.itemList[ this.selectedIndex + 1 ] );
+
+      /*
+      if ( this.selectedItem.nextSibling ) {
+
+        this.selectedItem.nextSibling.focus();
+
+      }
+      /*
+      this.setState( ( prevState ) => ( {
+
+        selectedIndex: prevState.selectedIndex + 1,
+        selectedItem: this.state.itemList[ prevState.selectedIndex + 1 ],
+
+      } ) );
+      */
+
+    }
+    else if ( key === "up" && this.selectedIndex - 1 >= 0 ) {
+
+      this.onSelectLanguage( this.itemList[ this.selectedIndex - 1 ] );
+
+      /*
+      if ( this.selectedItem.previousSibling ) {
+
+        this.selectedItem.previousSibling.focus();
+
+      }
+      */
+
+    }
 
   }
 
@@ -183,6 +231,7 @@ class ChangeLanguageModal extends Component {
 
     /*
     */
+    this.itemList = [];
 
     return createPortal( (
 
@@ -229,61 +278,74 @@ class ChangeLanguageModal extends Component {
                 className: "scrollbars-track-vertical-custom"
               } }>
 
-              <CListGroup className="">
+              <KeyboardEventHandler
+                handleKeys={ [ 'up', 'down' ] }
+                onKeyEvent={ this.onListKeyPressed } >
 
-                {
+                <CListGroup className="">
 
-                  languages.map( ( languageInfo, index ) => {
+                  {
 
-                    return (
+                    languages.map( ( languageInfo, intIndex ) => {
 
-                      <CListGroupItem
-                        href="#"
-                        className="border-0 custom-border-bottom-item cursor-pointer outline-0"
-                        key={ languageInfo.code }
-                        action
-                        active={ this.state.selectedLanguage === languageInfo.code }
-                        onClick={ () => this.onSelectLanguage( languageInfo.code ) }
-                        innerRef={ ( element ) => {
+                      return (
 
-                          if ( this.state.selectedLanguage === languageInfo.code ) {
+                        <CListGroupItem
+                          href="#"
+                          className="border-0 custom-border-bottom-item cursor-pointer outline-0"
+                          key={ languageInfo.code }
+                          action
+                          active={ this.state.selectedLanguage === languageInfo.code }
+                          onClick={ () => this.onSelectLanguage( languageInfo.code ) }
+                          //onFocus= { () => { console.log( "Focused" ) } }
+                          innerRef={ ( element ) => {
 
-                            this.selectedItem = element;
-                            this.selectedIndex = index;
+                            if ( this.state.selectedLanguage === languageInfo.code ) {
+
+                              this.selectedItem = element;
+                              this.selectedIndex = intIndex;
+
+                            }
+
+                          } }
+                        >
+
+                          {
+
+                            this.itemList.push( languageInfo.code ) ? null: null
 
                           }
 
-                        } }
-                      >
+                          <div className="d-flex align-items-center">
 
-                        <div className="d-flex align-items-center">
+                            <img
+                              alt={ languageInfo.country }
+                              className="d-inline-block"
+                              style={ {
+                                width: "40px", height: "40px"
+                              } }
+                              src={ `${process.env.PUBLIC_URL}${languageInfo.flag}` }
+                            />
 
-                          <img
-                            alt={ languageInfo.country }
-                            className="d-inline-block"
-                            style={ {
-                              width: "40px", height: "40px"
-                            } }
-                            src={ `${process.env.PUBLIC_URL}${languageInfo.flag}` }
-                          />
+                            <span className="d-inline-block ml-2">
 
-                          <span className="d-inline-block ml-2">
+                              { `${languageInfo.name} (${languageInfo.country})` }
 
-                            { `${languageInfo.name} (${languageInfo.country})` }
+                            </span>
 
-                          </span>
+                          </div>
 
-                        </div>
+                        </CListGroupItem>
 
-                      </CListGroupItem>
+                      );
 
-                    );
+                    } )
 
-                  } )
+                  }
 
-                }
+                </CListGroup>
 
-              </CListGroup>
+              </KeyboardEventHandler>
 
             </ScrollBars>
 

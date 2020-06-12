@@ -51,7 +51,8 @@ import {
 } from "../../../redux/actions";
 
 import SystemUtils from "../../../utils/systemUtils";
-import BackendClient from "../../../services/backendClient";
+import SystemBackendClient from "../../../services/systemBackendClient";
+import BusinessBackendClient from "../../../services/businessBackendClient";
 
 const propTypes = {
 
@@ -100,7 +101,7 @@ class UpdateTipView extends Component {
 
     try {
 
-      const result = await BackendClient.callGetEstablishment( this.props.authentication.accounts[ this.props.authentication.active ].Authorization, null );
+      const result = await BusinessBackendClient.callGetEstablishment( this.props.authentication.accounts[ this.props.authentication.active ].Authorization, null );
 
       if ( result instanceof Error === false ) {
 
@@ -252,19 +253,19 @@ class UpdateTipView extends Component {
         }
         else {
 
-          const uploadResponse = await BackendClient.callUploadFile( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                     this.state.fileToUpload,
-                                                                     this.uploadCallback,
-                                                                     null );
+          const uploadResponse = await SystemBackendClient.callUploadFile( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
+                                                                           this.state.fileToUpload,
+                                                                           this.uploadCallback,
+                                                                           null );
 
-          const jobId = await BackendClient.callStartUpdateTipJob( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                   {
-                                                                     Id: uploadResponse.Id,
-                                                                     Date: this.state.selectedDate,
-                                                                     EstablishmentId: this.state.selectedEstablishment,
-                                                                     Path: uploadResponse.Path
-                                                                   },
-                                                                   null );
+          const jobId = await BusinessBackendClient.callStartUpdateTipUberJob( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
+                                                                           {
+                                                                             Id: uploadResponse.Id,
+                                                                             Date: this.state.selectedDate,
+                                                                             EstablishmentId: this.state.selectedEstablishment,
+                                                                             Path: uploadResponse.Path
+                                                                           },
+                                                                           null );
 
           this.setState( () => ( {
             uploadProgressLabel: `${t( "Uploading file" )}...`,
@@ -276,12 +277,14 @@ class UpdateTipView extends Component {
 
           intervalHandler = setInterval( async () => {
 
-            const statusResponse = await BackendClient.callGetUpdateTipJobStatus( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                                  {
-                                                                                    Id: jobId,
-                                                                                    Output: "status"
-                                                                                  },
-                                                                                  null );
+            const statusResponse = await BusinessBackendClient.callGetUpdateTipUberJobStatus( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
+                                                                                          {
+                                                                                            Id: jobId,
+                                                                                            Output: "status"
+                                                                                          },
+                                                                                          null );
+
+            //console.log( statusResponse );
 
             if ( statusResponse instanceof Error === false ) {
 
@@ -383,7 +386,7 @@ class UpdateTipView extends Component {
 
                     <h1>
 
-                      <Trans i18nKey="Update Tips" />
+                      <Trans i18nKey="Update Tips Uber" />
 
                     </h1>
 

@@ -1,5 +1,6 @@
+import axios from "axios";
+
 //import CommonUtilities from "../utils/commonUtilities";
-const axios = require( "axios" );
 
 const debug = require( "debug" )( "V1BusinessDev001Service" );
 
@@ -31,11 +32,9 @@ class V1BusinessDev001Service {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odin/establishment";
 
-      strRequestURI += "/v1/business/dev001/odin/establishment";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {
@@ -106,11 +105,9 @@ class V1BusinessDev001Service {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odin/order/tip";
 
-      strRequestURI += "/v1/business/dev001/odin/order/tip";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {
@@ -181,11 +178,9 @@ class V1BusinessDev001Service {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + `/v1/business/dev001/odin/order/tip?Id=${queryParams.Id}&Output=${queryParams.Output}`;
 
-      strRequestURI += `/v1/business/dev001/odin/order/tip?Id=${queryParams.Id}&Output=${queryParams.Output}`;
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {

@@ -1,11 +1,13 @@
 //import React from "react";
 
+/*
 import {
   //CSidebarNavDivider,
   //CSidebarNavDropdown,
   CSidebarNavItem,
   CSidebarNavTitle
 } from "@coreui/react";
+*/
 
 /*
 import {
@@ -15,6 +17,7 @@ import {
 
 import i18n from "../../config/i18n.config";
 
+/*
 export default [
   {
     _tag: CSidebarNavTitle,
@@ -23,10 +26,98 @@ export default [
   {
     _tag: CSidebarNavItem,
     name: "Update Tips",
-    to: "/home/update/tips",
+    to: "/home/update/tips/uber",
     icon: "cil-pencil"
   }
 ];
+*/
+
+const navigationEntries: any = [
+
+  {
+
+    kind: "title",
+    to: "",
+    label: i18n.t( "Business" ),
+    backendActions: [],
+    icon: "",
+
+    entries: [
+
+      {
+
+        kind: "action",
+        to: "/home/update/tips/uber",
+        label: i18n.t( "Update Tips Uber" ),
+        backendActions: [
+                          "v1.business.dev001.odin.establishment",
+                          "v1.business.dev001.odin.order.tip.uber.job",
+                          "v1.business.dev001.odin.order.tip.uber.output"
+                        ],
+        icon: [ "far", "edit" ],
+
+      },
+
+      {
+
+        kind: "action",
+        to: "/home/test01",
+        label: i18n.t( "Test 01" ),
+        backendActions: [],
+        icon: "times"
+
+      },
+
+      {
+
+        kind: "action",
+        to: "/home/test02",
+        label: i18n.t( "Test 02" ),
+        backendActions: [],
+        icon: "times"
+
+      },
+
+    ]
+
+  },
+  {
+
+    kind: "title",
+    to: "",
+    label: i18n.t( "System" ),
+    backendActions: [],
+    icon: "",
+
+    entries: [
+
+      {
+
+        kind: "action",
+        to: "/home/test01",
+        label: i18n.t( "Test 01" ),
+        backendActions: [],
+        icon: "pencil-alt"
+
+      },
+
+      {
+
+        kind: "action",
+        to: "/home/test02",
+        label: i18n.t( "Test 02" ),
+        backendActions: [],
+        icon: "pencil-alt"
+
+      },
+
+    ]
+
+  },
+
+]
+
+export default navigationEntries;
 
 /*
 {

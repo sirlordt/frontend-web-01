@@ -9,7 +9,8 @@
       "request": "launch",
       "name": "Launch Firefox against localhost",
       "reAttach": true,
-      "file": "${workspaceFolder}/index.html"
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
     },
     {
       "type": "chrome",

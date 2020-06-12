@@ -12,6 +12,8 @@ import {
 
 import ScrollBars from "react-scrollbars-custom";
 
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+
 import {
   connect
 } from "react-redux";
@@ -59,7 +61,7 @@ import {
 
 import SystemUtils from "../../utils/systemUtils";
 
-import BackendClient from "../../services/backendClient";
+import SystemBackendClient from "../../services/systemBackendClient";
 
 const propTypes = {
 
@@ -98,6 +100,8 @@ class ChangeAccountModal extends Component {
     this.selectedItem = null; //React.createRef();
     this.selectedIndex = 0;
 
+    this.itemList = [];
+
     this.inputPassword = React.createRef();
 
   }
@@ -107,7 +111,12 @@ class ChangeAccountModal extends Component {
 
     modalRoot.appendChild( this.element );
 
-    this.onSelectAccount( this.props.authentication.active );
+    if ( !this.state.selectedAccount &&
+         this.itemList.length > 0 ) {
+
+      this.onSelectAccount( this.itemList[ 0 ] );
+
+    }
 
     setTimeout( () => {
 
@@ -179,7 +188,7 @@ class ChangeAccountModal extends Component {
 
   }
 
-  componentDidUpdate( prevProps ) {
+  componentDidUpdate( prevProps, prevState ) {
 
     if ( prevProps.showMe !== this.props.showMe ) {
 
@@ -189,18 +198,30 @@ class ChangeAccountModal extends Component {
 
       }
 
+    }
+
+    if ( !this.state.selectedAccount &&
+         this.itemList.length > 0 ) {
+
+      this.onSelectAccount( this.itemList[ 0 ] );
+
+    }
+
+    if ( prevProps.showMe !== this.props.showMe ||
+         prevState.selectedAccount !== this.state.selectedAccount ) {
+
       setTimeout( () => {
 
         if ( this.selectedItem ) {
 
           this.selectedItem.focus();
-          this.selectedItem.scrollIntoView( false );
+          //this.selectedItem.scrollIntoView( false );
 
           //console.log( this.selectedIndex );
 
         }
 
-      }, 100 );
+      }, 10 );
 
     }
 
@@ -213,6 +234,21 @@ class ChangeAccountModal extends Component {
   componentWillUnmount() {
 
     modalRoot.removeChild( this.element );
+
+  }
+
+  onListKeyPressed = ( key, event ) => {
+
+    if ( key === "down" && this.selectedIndex + 1 < this.itemList.length ) {
+
+      this.onSelectAccount( this.itemList[ this.selectedIndex + 1 ] );
+
+    }
+    else if ( key === "up" && this.selectedIndex - 1 >= 0 ) {
+
+      this.onSelectAccount( this.itemList[ this.selectedIndex - 1 ] );
+
+    }
 
   }
 
@@ -232,7 +268,7 @@ class ChangeAccountModal extends Component {
       buttonChangeAccountLabel = "Login";
       buttonChangeAccountIcon = "sign-in-alt";
 
-      const result = await BackendClient.callTokenCheck( this.props.authentication.accounts[ account ].Authorization,
+      const result = await SystemBackendClient.callTokenCheck( this.props.authentication.accounts[ account ].Authorization,
                                                          null );
 
       if ( result instanceof Error === false ) {
@@ -262,7 +298,9 @@ class ChangeAccountModal extends Component {
       selectedAccountIsAuthorized,
       buttonChangeAccountDisabled: !account,
       buttonChangeAccountLabel,
-      buttonChangeAccountIcon
+      buttonChangeAccountIcon,
+      fieldPasswordInvalid: false,
+      fieldPasswordMessage: ""
 
     } );
 
@@ -421,6 +459,8 @@ class ChangeAccountModal extends Component {
 
     const accountNames = Object.keys( this.props.authentication.accounts );
 
+    this.itemList = [];
+
     const t = this.props.t; //Translate functions injected by withTranslation function
 
     return createPortal( (
@@ -469,138 +509,152 @@ class ChangeAccountModal extends Component {
                 className: "scrollbars-track-vertical-custom"
               } }>
 
-              <CListGroup className="">
 
-                {
+              <KeyboardEventHandler
+                handleKeys={ [ 'up', 'down' ] }
+                onKeyEvent={ this.onListKeyPressed } >
 
-                  accountNames.map( ( accountName, index ) => {
+                <CListGroup className="">
 
-                    const accountInfo = this.props.authentication.accounts[ accountName ];
+                  {
 
-                    if ( this.props.backend.servers[ accountInfo.Backend ] ) {
+                    accountNames.map( ( strAccountName, intIndex ) => {
 
-                      return (
+                      const accountInfo = this.props.authentication.accounts[ strAccountName ];
 
-                        <CListGroupItem
-                          href="#"
-                          className="border-0 custom-border-bottom-item cursor-pointer outline-0"
-                          key={ accountName }
-                          action
-                          active={ this.state.selectedAccount === accountName }
-                          onClick={ () => this.onSelectAccount( accountName ) }
-                          innerRef={ ( element ) => {
+                      if ( this.props.backend.servers[ accountInfo.Backend ] ) {
 
-                            if ( this.state.selectedBackendServer === accountName ) {
+                        return (
 
-                              this.selectedItem = element;
-                              this.selectedIndex = index;
+                          <CListGroupItem
+                            href="#"
+                            className="border-0 custom-border-bottom-item cursor-pointer outline-0"
+                            key={ strAccountName }
+                            action
+                            active={ this.state.selectedAccount === strAccountName }
+                            onClick={ () => this.onSelectAccount( strAccountName ) }
+                            innerRef={ ( element ) => {
 
-                            }
+                              if ( ( intIndex === 0 && !this.state.selectedAccount ) ||
+                                     this.state.selectedAccount === strAccountName ) {
 
-                          } }
-                        >
+                                this.selectedItem = element;
+                                this.selectedIndex = intIndex;
 
-                          <div className="d-flex align-items-center">
+                              }
 
-                            {
-
-                              accountInfo.sysUser.Avatar ?
-                                (
-                                  <img
-                                    alt={ accountInfo.sysUser.Name }
-                                    className="d-inline-block rounded-circle"
-                                    style={ {
-                                      width: "40px", height: "40px"
-                                    } }
-                                    src={ `${process.env.PUBLIC_URL}${accountInfo.sysUser.Avatar}` }
-                                  />
-                                ) :
-                                (
-
-                                  <FontAwesomeIcon icon="user" size="2x" />
-
-                                )
-
-                            }
+                            } }
+                          >
 
                             {
 
-                              accountInfo.sysUser.sysPerson &&
-                              accountInfo.sysUser.sysPerson.FirstName ?
-                                (
-
-                                  <React.Fragment>
-
-                                    <div className="d-flex flex-column align-items-begin">
-
-                                      <h4 className="d-inline-block ml-2 font-weight-bold mb-0">
-
-                                        { `${accountInfo.sysUser.sysPerson.FirstName} ${accountInfo.sysUser.sysPerson.LastName}` }
-
-                                      </h4>
-
-                                      <h6 className="d-inline-block ml-2 mb-0">
-
-                                        { `${accountInfo.sysUser.Name}` }
-
-                                      </h6>
-
-                                      <h6 className="d-inline-block ml-2 mb-0">
-
-                                        { `${accountInfo.Backend}` }
-
-                                      </h6>
-
-                                    </div>
-
-                                  </React.Fragment>
-
-                                ) :
-                                (
-
-                                  <React.Fragment>
-
-                                    <div className="d-flex flex-column align-items-begin">
-
-                                      <h4 className="d-inline-block ml-2 font-weight-bold mb-0">
-
-                                        { `${accountInfo.sysUser.Name}` }
-
-                                      </h4>
-
-                                      <h6 className="d-inline-block ml-2 mb-0">
-
-                                        { `${accountInfo.Backend}` }
-
-                                      </h6>
-
-                                    </div>
-
-                                  </React.Fragment>
-
-                                )
-
+                              this.itemList.push( strAccountName ) ? null: null
 
                             }
 
-                          </div>
+                            <div className="d-flex align-items-center">
 
-                        </CListGroupItem>
+                              {
 
-                      );
+                                accountInfo.sysUser.Avatar ?
+                                  (
+                                    <img
+                                      alt={ accountInfo.sysUser.Name }
+                                      className="d-inline-block rounded-circle"
+                                      style={ {
+                                        width: "40px", height: "40px"
+                                      } }
+                                      src={ `${process.env.PUBLIC_URL}${accountInfo.sysUser.Avatar}` }
+                                    />
+                                  ) :
+                                  (
 
-                    }
-                    else {
+                                    <FontAwesomeIcon icon="user" size="2x" />
 
-                      return null;
+                                  )
 
-                    }
+                              }
 
-                  } )
+                              {
 
-                }
+                                accountInfo.sysUser.sysPerson &&
+                                accountInfo.sysUser.sysPerson.FirstName ?
+                                  (
 
-              </CListGroup>
+                                    <React.Fragment>
+
+                                      <div className="d-flex flex-column align-items-begin">
+
+                                        <h4 className="d-inline-block ml-2 font-weight-bold mb-0">
+
+                                          { `${accountInfo.sysUser.sysPerson.FirstName} ${accountInfo.sysUser.sysPerson.LastName}` }
+
+                                        </h4>
+
+                                        <h6 className="d-inline-block ml-2 mb-0">
+
+                                          { `${accountInfo.sysUser.Name}` }
+
+                                        </h6>
+
+                                        <h6 className="d-inline-block ml-2 mb-0">
+
+                                          { `${accountInfo.Backend}` }
+
+                                        </h6>
+
+                                      </div>
+
+                                    </React.Fragment>
+
+                                  ) :
+                                  (
+
+                                    <React.Fragment>
+
+                                      <div className="d-flex flex-column align-items-begin">
+
+                                        <h4 className="d-inline-block ml-2 font-weight-bold mb-0">
+
+                                          { `${accountInfo.sysUser.Name}` }
+
+                                        </h4>
+
+                                        <h6 className="d-inline-block ml-2 mb-0">
+
+                                          { `${accountInfo.Backend}` }
+
+                                        </h6>
+
+                                      </div>
+
+                                    </React.Fragment>
+
+                                  )
+
+
+                              }
+
+                            </div>
+
+                          </CListGroupItem>
+
+                        );
+
+                      }
+                      else {
+
+                        return null;
+
+                      }
+
+                    } )
+
+                  }
+
+                </CListGroup>
+
+              </KeyboardEventHandler>
 
             </ScrollBars>
 

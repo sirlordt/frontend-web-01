@@ -1,11 +1,10 @@
 import mainStore from "../redux/store";
 
-import V1SystemSecurityAuthenticationService from "./V1SystemSecurityAuthenticationService";
-import V1SystemUserService from "./V1SystemUserService";
-import V1SystemBinaryService from "./V1SystemBinaryService";
-import V1BusinessDev001Service from "./V1BusinessDev001Service";
+import V1SystemSecurityAuthenticationService from "./v1SystemSecurityAuthenticationService";
+import V1SystemUserService from "./v1SystemUserService";
+import V1SystemBinaryService from "./v1SystemBinaryService";
 
-class BackendClient {
+class SystemBackendClient {
 
   static defaultHeaders = {
 
@@ -28,7 +27,7 @@ class BackendClient {
 
       result = mainStore.getState().backend.servers[ mainStore.getState().backend.active ];
 
-      result.backend = mainStore.getState().backend.active;
+      //result.backend = mainStore.getState().backend.active;
 
     }
     catch ( error ) {
@@ -45,7 +44,7 @@ class BackendClient {
 
     const result = {
 
-      ...BackendClient.defaultHeaders,
+      ...SystemBackendClient.defaultHeaders,
       FrontendId: mainStore.getState().frontend.id,
       TimeZoneId: mainStore.getState().frontend.timeZoneId,
       Language: mainStore.getState().frontend.language
@@ -64,9 +63,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       result = await V1SystemSecurityAuthenticationService.callLogin( backendConfig,
                                                                       headersConfig,
@@ -92,9 +91,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       headersConfig.Authorization = strAutorization;
 
@@ -120,9 +119,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       headersConfig.Authorization = strAutorization;
 
@@ -148,9 +147,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       headersConfig.Authorization = strAutorization;
 
@@ -176,9 +175,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       headersConfig.Authorization = strAutorization;
 
@@ -221,9 +220,9 @@ class BackendClient {
 
     try {
 
-      const backendConfig = BackendClient.getBackendConfig();
+      const backendConfig = SystemBackendClient.getBackendConfig();
 
-      const headersConfig = BackendClient.getHeadersConfig();
+      const headersConfig = SystemBackendClient.getHeadersConfig();
 
       headersConfig.Authorization = strAutorization;
 
@@ -235,12 +234,12 @@ class BackendClient {
       const headersMultipart = {
 
         ...headersConfig,
-        "content-type": "multipart/form-data"
+        "Content-Type": "multipart/form-data"
         //...binaryRequest.getHeaders()
 
       };
 
-      delete headersMultipart[ "Content-Type" ];
+      //delete headersMultipart[ "Content-Type" ];
 
       result = await V1SystemBinaryService.callUploadBinaryData( backendConfig,
                                                                  headersMultipart,
@@ -291,127 +290,6 @@ class BackendClient {
 
   }
 
-  static async callGetEstablishment( strAutorization: string,
-                                     logger: any ) {
-
-    let result = null;
-
-    try {
-
-      const backendConfig = BackendClient.getBackendConfig();
-
-      const headersConfig = BackendClient.getHeadersConfig();
-
-      headersConfig.Authorization = strAutorization;
-
-      result = await V1BusinessDev001Service.callGetEstablishment( backendConfig,
-                                                                   headersConfig,
-                                                                   logger );
-
-      if ( result instanceof Error === false ) {
-
-        if ( result.output.body.Code === "SUCCESS_GET_ESTABLISHMENTS_LIST" &&
-             result.output.body.Data ) {
-
-          result = result.output.body.Data;
-
-        }
-
-      }
-
-    }
-    catch ( error ) {
-
-      result = error;
-
-    }
-
-    return result;
-
-  }
-
-  static async callStartUpdateTipJob( strAutorization: string,
-                                      data: any,
-                                      logger: any ) {
-
-    let result = null;
-
-    try {
-
-      const backendConfig = BackendClient.getBackendConfig();
-
-      const headersConfig = BackendClient.getHeadersConfig();
-
-      headersConfig.Authorization = strAutorization;
-
-      result = await V1BusinessDev001Service.callStartUpdateTipJob( backendConfig,
-                                                                    headersConfig,
-                                                                    data,
-                                                                    logger );
-
-      if ( result instanceof Error === false ) {
-
-        if ( result.output.body.Code === "SUCCESS_JOB_CREATION" &&
-             result.output.body.Data ) {
-
-          result = result.output.body.Data[ 0 ].Id;
-
-        }
-
-      }
-
-    }
-    catch ( error ) {
-
-      result = error;
-
-    }
-
-    return result;
-
-  }
-
-  static async callGetUpdateTipJobStatus( strAutorization: string,
-                                          data: any,
-                                          logger: any ) {
-
-    let result = null;
-
-    try {
-
-      const backendConfig = BackendClient.getBackendConfig();
-
-      const headersConfig = BackendClient.getHeadersConfig();
-
-      headersConfig.Authorization = strAutorization;
-
-      result = await V1BusinessDev001Service.callGetUpdateTipJobStatus( backendConfig,
-                                                                        headersConfig,
-                                                                        data,
-                                                                        logger );
-
-      if ( result instanceof Error === false ) {
-
-        if ( result.output.body.Code === "SUCCESS_GET_JOB_OUTPUT" &&
-             result.output.body.Data ) {
-
-          result = result.output.body.Data[ 0 ];
-
-        }
-
-      }
-
-    }
-    catch ( error ) {
-
-      result = error;
-
-    }
-
-    return result;
-
-  }
-
 }
 
-export default BackendClient;
+export default SystemBackendClient;

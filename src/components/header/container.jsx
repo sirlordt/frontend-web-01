@@ -35,7 +35,7 @@ import {
 } from "react-i18next";
 
 // routes config
-import routes from "../../routes";
+import { routes } from "../../routes";
 
 import logo from "../../assets/img/brand/coreui-pro-base.svg";
 
@@ -52,6 +52,7 @@ import {
 } from "../../redux/actions";
 
 import SystemUtils from "../../utils/systemUtils";
+import CommonUtilities from "../../utils/commonUtilities";
 
 const propTypes = {
 
@@ -168,10 +169,17 @@ class Header extends Component {
 
     const isAuthenticated = !!( this.props.authentication.active );
 
-    const showButtonLogin = !!( Object.keys( this.props.frontend.userActions ).length === 0 || this.props.frontend.userActions[ "v1.system.auth.login" ] );
-    const showButtonSignup = !!( Object.keys( this.props.frontend.userActions ).length === 0 ||
-                                 ( this.props.frontend.userActions[ "v1.system.user.signup" ] &&
-                                   this.props.frontend.userActions[ "v1.system.user.signup.activate" ] ) );
+    const showButtonLogin = CommonUtilities.checkActionAllowed( this.props.frontend.userActions,
+                                                                [ "v1.system.auth.login" ],
+                                                                "weak_and" );
+    //!!( Object.keys( this.props.frontend.userActions ).length === 0 || this.props.frontend.userActions[ "v1.system.auth.login" ] );
+    const showButtonSignup = CommonUtilities.checkActionAllowed( this.props.frontend.userActions,
+                                                                 [ "v1.system.user.signup",
+                                                                   "v1.system.user.signup.activate" ],
+                                                                 "weak_and" );
+    //!!( Object.keys( this.props.frontend.userActions ).length === 0 ||
+    //                             ( this.props.frontend.userActions[ "v1.system.user.signup" ] &&
+    //                               this.props.frontend.userActions[ "v1.system.user.signup.activate" ] ) );
 
     const t = this.props.t; //Translate functions injected by withTranslation function
 

@@ -1,5 +1,6 @@
+import axios from "axios";
+
 //import CommonUtilities from "../utils/commonUtilities";
-const axios = require( "axios" );
 
 const debug = require( "debug" )( "V1SystemBinaryService" );
 
@@ -7,9 +8,9 @@ class V1SystemBinaryService {
 
   static async callCreateAuth( backend: any,
                                headers: any,
-                               logger: any ): Promise<{ input: any, output: any }> {
+                               logger: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -26,11 +27,9 @@ class V1SystemBinaryService {
 
       };
 
-      let strRequestPath = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary/auth";
 
-      strRequestPath += "/v1/system/binary/auth";
-
-      const callResult = await axios( strRequestPath,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {
@@ -65,6 +64,8 @@ class V1SystemBinaryService {
 
       }
 
+      result = error;
+
     }
 
     return result;
@@ -75,9 +76,9 @@ class V1SystemBinaryService {
                                      headers: any,
                                      body: any,
                                      uploadCallback: any,
-                                     logger: any ): Promise<{ input: any, output: any }> {
+                                     logger: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+   let result: any = {
 
       input: null,
       output: null
@@ -100,11 +101,9 @@ class V1SystemBinaryService {
 
       };
 
-      let strRequestPath = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary";
 
-      strRequestPath += "/v1/system/binary";
-
-      const callResult = await axios.post( strRequestPath,
+      const callResult = await axios.post( strRequestURL,
                                            body,
                                            options );
 
@@ -145,6 +144,8 @@ class V1SystemBinaryService {
         logger.error( error );
 
       }
+
+      result = error;
 
     }
 

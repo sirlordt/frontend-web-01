@@ -11,7 +11,7 @@ import {
 import Loading from "../../components/loading";
 
 // routes config
-import routes from "../../routes";
+import { routes, _DEFAULT_ROUTE } from "../../routes";
 
 class container extends Component {
 
@@ -38,7 +38,7 @@ class container extends Component {
               ) : ( null );
 
             } )}
-            <Redirect from="/" to="/home/update/tips" />
+            <Redirect from="/" to={ _DEFAULT_ROUTE } />
           </Switch>
         </Suspense>
       </main>

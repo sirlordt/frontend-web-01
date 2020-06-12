@@ -1,5 +1,6 @@
+import axios from "axios";
+
 //import CommonUtilities from "../utils/commonUtilities";
-const axios = require( "axios" );
 
 const debug = require( "debug" )( "V1SystemUserService" );
 
@@ -31,11 +32,9 @@ class V1SystemUserService {
 
       };
 
-      let strRequestURI = `${backend.protocol}${backend.host}:${backend.port}${backend.rootPath}`;
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/actions";
 
-      strRequestURI += "/v1/system/user/actions";
-
-      const callResult = await axios( strRequestURI,
+      const callResult = await axios( strRequestURL,
                                       options );
 
       result.output = callResult ? {

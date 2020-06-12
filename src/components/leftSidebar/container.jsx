@@ -8,7 +8,7 @@ import {
 } from "react-redux";
 
 import {
-  CCreateElement,
+  //CCreateElement,
   CSidebar,
   CSidebarBrand,
   CSidebarNav,
@@ -16,8 +16,9 @@ import {
   //CSidebarNavTitle,
   //CNavItem,
   //CProgress,
-  CSidebarMinimizer,
+  CSidebarNavTitle,
   CSidebarNavItem,
+  CSidebarMinimizer,
   CLink
 } from "@coreui/react";
 
@@ -39,7 +40,8 @@ import {
   closeLeftSidebar
 } from "../../redux/actions";
 
-import navigation from "./navigation";
+import navigationEntries from "./navigation";
+import CommonUtilities from "../../utils/commonUtilities";
 
 class LeftSidebar extends Component {
 
@@ -77,8 +79,107 @@ class LeftSidebar extends Component {
 
           <CSidebarNav>
 
+            {/*
             <CCreateElement items={ navigation } />
+            */}
 
+            {
+
+              navigationEntries.map( ( navigationInfo, intIndex ) => {
+
+                const bActionAllowed = CommonUtilities.checkActionAllowed( this.props.frontend.userActions,
+                                                                           navigationInfo.backendActions,
+                                                                           "strict_and" );
+
+                if ( bActionAllowed && navigationInfo.kind === "title" ) {
+
+                  return (
+
+                    <React.Fragment>
+
+                      <CSidebarNavTitle>
+
+                        { navigationInfo.label }
+
+                      </CSidebarNavTitle>
+
+                      {
+
+                        navigationInfo.entries.map( ( entry, intIndex ) => {
+
+                          const bActionAllowed = CommonUtilities.checkActionAllowed( this.props.frontend.userActions,
+                                                                                     entry.backendActions,
+                                                                                     "strict_and" );
+
+                          if ( bActionAllowed ) {
+
+                            return (
+
+                              <CSidebarNavItem>
+
+                                <CLink
+                                  className="c-sidebar-nav-link"
+                                  to={ entry.to }
+                                  exact
+                                  activeClassName="c-active"
+                                >
+                                  <FontAwesomeIcon className="c-sidebar-nav-icon" icon={ entry.icon } />
+                                  { entry.label }
+                                </CLink>
+
+                              </CSidebarNavItem>
+
+                            )
+
+                          }
+                          else {
+
+                            return ( null )
+
+                          }
+
+                        })
+
+                      }
+
+                     </React.Fragment>
+
+                  )
+
+                }
+                else if ( bActionAllowed && navigationInfo.kind === "action" ) { //kind === "action"
+
+                  return (
+
+                    <CSidebarNavItem>
+
+                      <CLink
+                        className="c-sidebar-nav-link"
+                        to={ navigationInfo.to }
+                        exact
+                        activeClassName="c-active"
+                      >
+                        <FontAwesomeIcon className="c-sidebar-nav-icon" icon={ navigationInfo.icon } />
+                        { navigationInfo.label }
+                      </CLink>
+
+                    </CSidebarNavItem>
+
+                  )
+
+                }
+                else {
+
+                  return ( null )
+
+                }
+
+              } )
+
+            }
+
+
+            {/*
             <CSidebarNavItem>
 
               <CLink
@@ -92,6 +193,8 @@ class LeftSidebar extends Component {
               </CLink>
 
             </CSidebarNavItem>
+            */}
+
             {/*
             <CSidebarNavItem>
 

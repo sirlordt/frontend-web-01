@@ -20,7 +20,7 @@ const availableLanguages = [ "en_US", "es_ES" ];
     whitelist: availableLanguages,
     //lng: "en_US",
     returnEmptyString: false,
-    debug: true, //process.env.NODE_ENV !== 'production',
+    debug: false, //process.env.NODE_ENV !== 'production',
     ns: [ "translations" ],
     defaultNS: "translations",
     keySeparator: false,

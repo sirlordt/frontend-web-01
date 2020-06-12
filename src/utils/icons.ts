@@ -25,7 +25,9 @@ import {
   faCogs,
   faBuilding,
   faFileExcel,
-  faServer
+  faServer,
+  faPenAlt,
+  faPencilAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -35,7 +37,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
-  faCalendar
+  faCalendar,
+  faEdit
 } from "@fortawesome/free-regular-svg-icons";
 
 library.add( faCheckSquare,
@@ -64,4 +67,7 @@ library.add( faCheckSquare,
              faCogs,
              faBuilding,
              faFileExcel,
-             faServer );
+             faServer,
+             faPenAlt,
+             faEdit,
+             faPencilAlt );

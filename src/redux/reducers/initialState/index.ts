@@ -10,33 +10,27 @@ const initialState: any = {
       local01: {
 
         icon: "server",
+        code: "local01",
         name: "Local 01",
-        protocol: "http://",
-        host: "127.0.0.1",
-        port: 9090,
-        rootPath: "/backend-server-01"
+        url: [ "http://127.0.0.1:9090/backend-server-01" ]
 
       },
 
       test01: {
 
         icon: "server",
+        code: "test01",
         name: "Test 01",
-        protocol: "https://",
-        host: "test01.odindt.com",
-        port: 443,
-        rootPath: "/kk/api"
+        url: [ "https://test01.odindt.com/kk/api" ]
 
       },
 
       production01: {
 
         icon: "server",
+        code: "production01",
         name: "Production 01",
-        protocol: "https://",
-        host: "odindt.com",
-        port: 443,
-        rootPath: "/kk/api"
+        url: [ "https://odindt.com/kk/api" ]
 
       }
 
