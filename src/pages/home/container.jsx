@@ -7,7 +7,7 @@ import {
   connect
 } from "react-redux";
 
-import classNames from "classnames";
+//import classNames from "classnames";
 
 import PropTypes from "prop-types";
 
@@ -229,21 +229,23 @@ class HomePage extends Component {
 
       const isAuthenticated = !!( this.props.authentication.active );
 
+      /*
       // dark theme
       const classes = classNames(
-        "c-app c-default-layout",
-        this.props.frontend.themeDark ? "c-dark-theme" : false
+        "c-app c-default-layout fade-in",
+        this.props.frontend.themeDark ? "c-dark-theme fade-in" : false
       );
+      */
 
       result = (
 
-        <div className={ classes }>
+        <React.Fragment>
 
           {
             isAuthenticated ? <LeftSidebar /> : null
           }
 
-          <div className="c-wrapper">
+          <div className="c-wrapper fade-in">
 
             <CHeader withSubheader>
 
@@ -277,7 +279,7 @@ class HomePage extends Component {
 
           </div>
 
-        </div>
+        </React.Fragment>
 
       );
 

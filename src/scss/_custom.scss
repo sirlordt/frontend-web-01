@@ -3,6 +3,12 @@
 
 //@import "variables";
 
+.c-dark-theme .c-body {
+
+  background-color: var( --light-dark-theme );
+
+}
+
 .c-footer {
 
   background: $header-light-bg__lt;
@@ -325,6 +331,51 @@ label {
   padding-right: 100px;
 
 }
+
+.fade-transition-enter {
+
+  opacity: 0;
+
+}
+
+.fade-exit {
+
+  opacity: 1;
+
+}
+
+.fade-transition-enter-active {
+
+  opacity: 1;
+
+}
+
+.fade-transition-exit-active {
+
+  opacity: 0;
+
+}
+
+.fade-transition-enter-active,
+.fade-transition-exit-active {
+
+  transition: opacity 500ms;
+
+}
+
+.fade-in {
+
+  animation: fadeIn ease 3s;
+
+}
+
+@keyframes fadeIn {
+
+  0% { opacity:0; }
+  100% { opacity:1; }
+
+}
+
 
 /*
 .ScrollbarsCustom:hover .ScrollbarsCustom-Track.Scrollbars-Track-Vertical-Custom {

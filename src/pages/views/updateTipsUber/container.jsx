@@ -278,11 +278,11 @@ class UpdateTipView extends Component {
           intervalHandler = setInterval( async () => {
 
             const statusResponse = await BusinessBackendClient.callGetUpdateTipUberJobStatus( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                                          {
-                                                                                            Id: jobId,
-                                                                                            Output: "status"
-                                                                                          },
-                                                                                          null );
+                                                                                              {
+                                                                                                Id: jobId,
+                                                                                                Output: "status"
+                                                                                              },
+                                                                                              null );
 
             //console.log( statusResponse );
 

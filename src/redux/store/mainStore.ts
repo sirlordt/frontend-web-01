@@ -46,8 +46,18 @@ if ( initialStateFrontendData.language ) {
 initialState.frontend.language = strUseThisLanguage || "en_US";
 
 initialState.frontend.themeDark = initialStateFrontendData.themeDark || initialState.frontend.themeDark;
-initialState.frontend.isLeftSidebarOpen = initialStateFrontendData.isLeftSidebarOpen || initialState.frontend.isLeftSidebarOpen;
-initialState.frontend.isLeftSidebarMinimized = initialStateFrontendData.isLeftSidebarMinimized || initialState.frontend.isLeftSidebarMinimized;
+
+if ( initialState.frontend.isLeftSidebarOpen !== undefined ) {
+
+  initialState.frontend.isLeftSidebarOpen = initialStateFrontendData.isLeftSidebarOpen;
+
+}
+
+if ( initialStateFrontendData.isLeftSidebarMinimized !== undefined ) {
+
+  initialState.frontend.isLeftSidebarMinimized = initialStateFrontendData.isLeftSidebarMinimized;
+
+}
 initialState.frontend.sidebarMobile = initialStateFrontendData.sidebarMobile || initialState.frontend.sidebarMobile;
 initialState.frontend.sidebarDisplay = initialStateFrontendData.sidebarDisplay || initialState.frontend.sidebarDisplay;
 initialState.frontend.isRightSidebarOpen = initialStateFrontendData.isRightSidebarOpen || initialState.frontend.isRightSidebarOpen;

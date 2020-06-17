@@ -41,17 +41,23 @@ import {
 } from "../../redux/actions";
 
 import navigationEntries from "./navigation";
+
 import CommonUtilities from "../../utils/commonUtilities";
+import SystemUtils from "../../utils/systemUtils";
 
 class LeftSidebar extends Component {
 
-  /*
   constructor( props ) {
 
     super( props );
 
+    this.state = {
+
+      id: SystemUtils.getUUIDv4()
+
+    };
+
   }
-  */
 
   render() {
 
@@ -63,7 +69,8 @@ class LeftSidebar extends Component {
         show={ this.props.frontend.isLeftSidebarOpen } // sidebarShow }
         unfoldable
         minimize={ this.props.frontend.isLeftSidebarMinimized } //this.state.minimize }
-        onShowChange={ this.props.closeLeftSidebar } //onChange }
+        onShowChange={ () => { this.props.frontend.closeLeftSidebar( { transactionId: this.state.id } ) } } //onChange }
+        onMinimizeChange={ () => { this.props.minimizeLeftSidebar( { transactionId: this.state.id } ) } }
         dropdownMode="closeInactive"
       >
 
@@ -95,7 +102,7 @@ class LeftSidebar extends Component {
 
                   return (
 
-                    <React.Fragment>
+                    <React.Fragment key={ intIndex }>
 
                       <CSidebarNavTitle>
 
@@ -115,9 +122,10 @@ class LeftSidebar extends Component {
 
                             return (
 
-                              <CSidebarNavItem>
+                              <CSidebarNavItem key={ intIndex }>
 
                                 <CLink
+                                  key={ intIndex }
                                   className="c-sidebar-nav-link"
                                   to={ entry.to }
                                   exact
@@ -151,7 +159,7 @@ class LeftSidebar extends Component {
 
                   return (
 
-                    <CSidebarNavItem>
+                    <CSidebarNavItem key={ intIndex }>
 
                       <CLink
                         className="c-sidebar-nav-link"
@@ -273,6 +281,7 @@ const mapDispatchToProps = {
 
   minimizeLeftSidebar,
   closeLeftSidebar
+
 };
 
 

@@ -181,11 +181,14 @@ function reducer( state = initialState.frontend, action: any ): any {
 
         result.themeDark = !result.themeDark;
 
-        delete result.id; //not save the id
+        const dataToSave = cloneDeep( result );
 
-        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( result ) );
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
 
-        result.id = state.id;
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
 
         result.results[ action.payload.transactionId ] = {
 
@@ -237,11 +240,14 @@ function reducer( state = initialState.frontend, action: any ): any {
 
         result.language = action.payload.language;
 
-        delete result.id; //not save the id
+        const dataToSave = cloneDeep( result );
 
-        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( result ) );
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
 
-        result.id = state.id;
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
 
         result.results[ action.payload.transactionId ] = {
 
@@ -285,6 +291,15 @@ function reducer( state = initialState.frontend, action: any ): any {
         const leftSidebarOpened = result.isLeftSidebarOpen === true || result.isLeftSidebarOpen === "responsive";
 
         result.isLeftSidebarOpen = leftSidebarOpened ? false : "responsive";
+
+        const dataToSave = cloneDeep( result );
+
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
+
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
 
         result.results[ action.payload.transactionId ] = {
 
@@ -338,6 +353,15 @@ function reducer( state = initialState.frontend, action: any ): any {
 
         result.isLeftSidebarOpen = leftSidebarClosed ? true : "responsive";
 
+        const dataToSave = cloneDeep( result );
+
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
+
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
+
         result.results[ action.payload.transactionId ] = {
 
           actionType: action.type,
@@ -378,6 +402,15 @@ function reducer( state = initialState.frontend, action: any ): any {
         result = cloneDeep( state );
 
         result.isLeftSidebarMinimized = !result.isLeftSidebarMinimized;
+
+        const dataToSave = cloneDeep( result );
+
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
+
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
 
         result.results[ action.payload.transactionId ] = {
 
@@ -420,6 +453,15 @@ function reducer( state = initialState.frontend, action: any ): any {
 
         result.isLeftSidebarOpen = "responsive";
 
+        const dataToSave = cloneDeep( result );
+
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
+
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
+
         result.results[ action.payload.transactionId ] = {
 
           actionType: action.type,
@@ -460,6 +502,15 @@ function reducer( state = initialState.frontend, action: any ): any {
         result = cloneDeep( state );
 
         result.isRightSidebarOpen = !result.isRightSidebarOpen;
+
+        const dataToSave = cloneDeep( result );
+
+        delete dataToSave.id;
+        delete dataToSave.results;
+        delete dataToSave.modalStack;
+        delete dataToSave.userActions;
+
+        localStorage.setItem( "_FRONTEND_DATA", JSON.stringify( dataToSave ) );
 
         result.results[ action.payload.transactionId ] = {
 

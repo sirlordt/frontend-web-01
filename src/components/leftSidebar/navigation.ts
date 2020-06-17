@@ -36,6 +36,7 @@ const navigationEntries: any = [
 
   {
 
+    key: "613F54",
     kind: "title",
     to: "",
     label: i18n.t( "Business" ),
@@ -46,6 +47,7 @@ const navigationEntries: any = [
 
       {
 
+        key: "D08FB8",
         kind: "action",
         to: "/home/update/tips/uber",
         label: i18n.t( "Update Tips Uber" ),
@@ -60,6 +62,7 @@ const navigationEntries: any = [
 
       {
 
+        key: "558FEE",
         kind: "action",
         to: "/home/test01",
         label: i18n.t( "Test 01" ),
@@ -70,6 +73,7 @@ const navigationEntries: any = [
 
       {
 
+        key: "A5A588",
         kind: "action",
         to: "/home/test02",
         label: i18n.t( "Test 02" ),
@@ -83,6 +87,7 @@ const navigationEntries: any = [
   },
   {
 
+    key: "B78D72",
     kind: "title",
     to: "",
     label: i18n.t( "System" ),
@@ -93,6 +98,7 @@ const navigationEntries: any = [
 
       {
 
+        key: "924649",
         kind: "action",
         to: "/home/test01",
         label: i18n.t( "Test 01" ),
@@ -103,6 +109,7 @@ const navigationEntries: any = [
 
       {
 
+        key: "38796C",
         kind: "action",
         to: "/home/test02",
         label: i18n.t( "Test 02" ),

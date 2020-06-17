@@ -51,13 +51,22 @@ class Footer extends Component {
 
         <div className="ml-md-auto">
 
-          <span className="mr-1">Powered by</span>
+          <span className="mr-1">
+            <Trans i18nKey="Release"/>:
+          </span>
+          <span className="mr-1 font-weight-bold">{ this.props.frontend.info.release }</span>
+          <span className="mr-1">
+            <Trans i18nKey="Server"/>:
+          </span>
+          <span className="mr-1 font-weight-bold">{ this.props.backend.active }</span>
 
+          {/*
           <a href="https://coreui.io/react" target="_blank" rel="noopener noreferrer">
 
             <Trans i18nKey="CoreUI for React" />
 
           </a>
+          */}
 
         </div>
 
@@ -79,7 +88,8 @@ const mapStateToProps = ( state ) => {
   return {
 
     //authentication: state.authentication,
-    frontend: state.frontend
+    frontend: state.frontend,
+    backend: state.backend
 
   };
 

@@ -1,9 +1,10 @@
+import information from "../../../info.json";
 
 const initialState: any = {
 
   backend: {
 
-    active: "local01",
+    active: process.env.REACT_APP_NODE_SCRIPT === "production01" ? "production01": "test01",
 
     servers: {
 
@@ -73,13 +74,14 @@ const initialState: any = {
 
   frontend: {
 
+    info: information,
     id: "ccc1",
     language: "en_US",
     timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone,
 
     themeDark: false,
     isLeftSidebarOpen: "responsive",
-    isLeftSidebarMinimized: true,
+    isLeftSidebarMinimized: false,
     sidebarMobile: false,
     sidebarDisplay: "sm",
     isRightSidebarOpen: false,

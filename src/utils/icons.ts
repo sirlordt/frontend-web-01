@@ -33,7 +33,8 @@ import {
 import {
   faFacebook,
   faTwitter,
-  faGoogle
+  faGoogle,
+  faInstagram
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
@@ -70,4 +71,5 @@ library.add( faCheckSquare,
              faServer,
              faPenAlt,
              faEdit,
-             faPencilAlt );
+             faPencilAlt,
+             faInstagram );

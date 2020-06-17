@@ -10,7 +10,15 @@ import {
   connect
 } from "react-redux";
 
-import classNames from "classnames";
+import {
+  FacebookProvider,
+  Login
+} from 'react-facebook';
+
+//import { IntagramLogin } from 'react-instagram-login';
+
+import { GoogleLogin } from 'react-google-login';
+
 
 import {
   CButton,
@@ -27,7 +35,8 @@ import {
   CInvalidFeedback,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
+  CRow,
+  CTooltip
 } from "@coreui/react";
 
 import {
@@ -277,6 +286,42 @@ class LoginPage extends Component {
 
   }
 
+  responseSuccessGoogle = ( response ) => {
+
+    console.log( "Google Success => ", response );
+
+  }
+
+  responseFailureGoogle = ( response ) => {
+
+    console.log( "Google Failure => ", response );
+
+  }
+
+  responseSuccessFacebook = ( response ) => {
+
+    console.log( "Facebook Success => ", response );
+
+  }
+
+  responseFailureFacebook = ( response ) => {
+
+    console.log( "Facebook Failure => ", response );
+
+  }
+
+  responseSuccessInstagram = ( response ) => {
+
+    console.log( "Instagram Success => ", response );
+
+  }
+
+  responseFailureInstagram = ( response ) => {
+
+    console.log( "Instagram Failure => ", response );
+
+  }
+
   onClickButtonGoogle = ( event ) => {
 
     event && event.preventDefault();
@@ -337,19 +382,23 @@ class LoginPage extends Component {
   render() {
 
     // dark theme
+    /*
     const classes = classNames(
-      "c-app c-default-layout flex-row align-items-start pt-3",
-      this.props.frontend.themeDark ? "c-dark-theme" : false
+      "c-app c-default-layout flex-row align-items-start pt-3 fade-in",
+      this.props.frontend.themeDark ? "c-dark-theme fade-in" : false
       //this.state.themeDark ? "c-dark-theme" : false
     );
+    */
+
+    //console.log( process.env.REACT_APP_REACT_SCRIPT );
 
     const t = this.props.t; //Translate functions injected by withTranslation function
 
     return (
 
-      <div className={ classes }>
+      <React.Fragment>
 
-        <CContainer>
+        <CContainer className="pt-3 fade-in">
 
           <CRow className="justify-content-center">
 
@@ -560,29 +609,101 @@ class LoginPage extends Component {
 
                       <CFormGroup className="mb-4 d-flex justify-content-center">
 
-                        <CButton
-                          className="btn-facebook box-shadow-none btn-brand mr-3"
-                          onClick={ this.onClickButtonFacebook }>
+                        <FacebookProvider
+                          appId={ process.env.REACT_APP_FACEBOOK_APP_ID }>
 
-                          <FontAwesomeIcon icon={ [ "fab", "facebook" ] } />
+                          <Login
+                            scope="email"
+                            onCompleted={ this.responseSuccessFacebook }
+                            onError={ this.responseFailureFacebook }
+                          >
 
-                        </CButton>
+                            {({ loading, handleClick, error, data }) => (
 
-                        <CButton
-                          className="btn-twitter box-shadow-none btn-brand mr-3"
-                          onClick={ this.onClickButtonTwitter }>
+                              <CTooltip content="Facebook">
 
-                          <FontAwesomeIcon icon={ [ "fab", "twitter" ] } />
+                                <CButton
+                                  className="btn-facebook box-shadow-none btn-brand mr-3"
+                                  onClick={ handleClick }
+                                  disabled={ loading }
+                                >
 
-                        </CButton>
 
-                        <CButton
-                          className="btn-youtube box-shadow-none btn-brand"
-                          onClick={ this.onClickButtonGoogle }>
+                                  <FontAwesomeIcon icon={ [ "fab", "facebook" ] } />
 
-                          <FontAwesomeIcon icon={ [ "fab", "google" ] } />
+                                </CButton>
 
-                        </CButton>
+                              </CTooltip>
+
+                            )}
+
+                          </Login>
+
+                        </FacebookProvider>
+                        {/*
+                        <FacebookLogin
+                          appId={ process.env.REACT_APP_FACEBOOK_APP_ID }
+                          autoload
+                          render={ renderProps => (
+
+                            <CButton
+                              className="btn-facebook box-shadow-none btn-brand mr-3"
+                              onClick={ renderProps.onClick }
+                              disabled={ renderProps.disabled }
+                              alt="Facebook">
+
+                              <FontAwesomeIcon icon={ [ "fab", "facebook" ] } />
+
+                            </CButton>
+
+                          )}
+                          callback={ this.responseFacebook }
+                          //cookiePolicy={'single_host_origin'}
+                          //approvalPrompt="force"
+                          //responseType='code,token'
+                        />
+                          */}
+
+                        <CTooltip content="Instagram">
+
+                          <CButton
+                            className="btn-instagram box-shadow-none btn-brand mr-3"
+                            onClick={ this.onClickButtonInstagram }
+                            alt="Instagram">
+
+                            <FontAwesomeIcon icon={ [ "fab", "instagram" ] } />
+
+                          </CButton>
+
+                        </CTooltip>
+
+                        <GoogleLogin
+                          clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
+                          render={ renderProps => (
+
+                            <CTooltip content="Google">
+
+                              <CButton
+                                className="btn-youtube box-shadow-none btn-brand"
+                                onClick={ renderProps.onClick }
+                                disabled={ renderProps.disabled }
+                                alt="Google"
+                                //onClick={ this.onClickButtonGoogle }>
+                              >
+
+                                <FontAwesomeIcon icon={ [ "fab", "google" ] } />
+
+                              </CButton>
+
+                            </CTooltip>
+
+                          )}
+                          onSuccess={ this.responseSuccessGoogle }
+                          onFailure={ this.responseFailureGoogle }
+                          //cookiePolicy={'single_host_origin'}
+                          //approvalPrompt="force"
+                          responseType='code,token'
+                        />
 
                       </CFormGroup>
 
@@ -662,7 +783,7 @@ class LoginPage extends Component {
 
         </CContainer>
 
-      </div>
+      </React.Fragment>
 
     );
 

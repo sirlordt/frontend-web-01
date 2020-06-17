@@ -9,9 +9,19 @@ import {
   withRouter
 } from "react-router-dom";
 
+/*
+import {
+  TransitionGroup,
+  SwitchTransition,
+  CSSTransition
+} from "react-transition-group";
+*/
+
 import {
   connect
 } from "react-redux";
+
+import classNames from "classnames";
 
 import PropTypes from "prop-types";
 
@@ -67,6 +77,17 @@ class RootPage extends Component {
 
   componentDidMount() {
 
+    if ( this.props.frontend.themeDark ) {
+
+      document.body.classList.add( "c-dark-theme" );
+
+    }
+    else {
+
+      document.body.classList.remove( "c-dark-theme" );
+
+    }
+
     /*
     try {
 
@@ -90,6 +111,17 @@ class RootPage extends Component {
   }
 
   componentDidUpdate() {
+
+    if ( this.props.frontend.themeDark ) {
+
+      document.body.classList.add( "c-dark-theme" );
+
+    }
+    else {
+
+      document.body.classList.remove( "c-dark-theme" );
+
+    }
 
     /*
     const {
@@ -156,36 +188,94 @@ class RootPage extends Component {
     }
     */
 
+    //console.log( this.props.location.pathname );
+    //console.log( this.props );
+          /*
+      <Route
+        render={({ location }) => {
+
+          return (
+
+          );
+
+        }}
+      />
+
+          */
+    const classes = classNames( "c-app c-default-layout",
+      this.props.frontend.themeDark ? "c-dark-theme" : false
+    );
+
+    return (
+
+      <div className={ classes }>
+
+        <ModalManager/>
+
+        {/*}
+        <SwitchTransition mode="out-in">
+
+          <CSSTransition
+            timeout={500}
+            classNames="fade-transition"
+            key={this.props.location.pathname}
+          >
+         */}
+
+            <Switch location={this.props.location}>
+              <Route exact path="/login" name="Login Page" render={ ( props ) => <LoginPage { ...props } /> } />
+              <Route exact path="/home" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
+              <Route path="/" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
+            </Switch>
+
+          {/*
+          </CSSTransition>
+
+        </SwitchTransition>
+          */}
+
+      </div>
+
+    );
+
+    /*
     return (
 
       <React.Fragment>
 
         <ModalManager />
-        <Switch>
 
-          {/*location={ forcedLocation } { pathname: "/home" }
-          <Route exact path="/login" name="Login Page" render={ ( props ) => <Login { ...props } /> } />
-          <Route exact path="/register" name="Register Page" render={ ( props ) => <Register { ...props } /> } />
-          <Route exact path="/404" name="Page 404" render={ ( props ) => <Page404 { ...props } /> } />
-          <Route exact path="/500" name="Page 500" render={ ( props ) => <Page500 { ...props } /> } />
-          <Redirect from="/" to="/home" />
-          */}
-          <Route exact path="/login" name="Login Page" render={ ( props ) => <LoginPage { ...props } /> } />
-          <Route exact path="/home" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
-          <Route path="/" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
+        <TransitionGroup>
 
-        </Switch>
+          <SwitchTransition mode="in-out">
 
+            <CSSTransition
+              key={ this.props.location.pathname === "/login" || this.props.location.pathname === "/home" || this.props.location.pathname === "/" }
+              classNames="fade-transition"
+              timeout={{
+                enter: 500,
+                exit: 500
+              }}
+            >
 
-        {/*
+              <Switch>
 
-          usePreviousLocation && <Route exact path="/login" name="Login Modal" render={ ( props ) => <LoginModal { ...props } /> } />
+                <Route exact path="/login" name="Login Page" render={ ( props ) => <LoginPage { ...props } /> } />
+                <Route exact path="/home" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
+                <Route path="/" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
 
-        */}
+              </Switch>
+
+            </CSSTransition>
+
+          </SwitchTransition>
+
+        </TransitionGroup>
 
       </React.Fragment>
 
     );
+    */
 
   }
 
