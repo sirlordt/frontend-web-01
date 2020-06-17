@@ -6,7 +6,7 @@ import V1BusinessDev001Service from "./v1BusinessDev001Service";
 class BusinessBackendClient {
 
   static async callGetEstablishment( strAutorization: string,
-                                     logger: any ) {
+                                     logger: any ): Promise<any> {
 
     let result = null;
 
@@ -45,8 +45,7 @@ class BusinessBackendClient {
   }
 
   static async callStartUpdateTipUberJob( strAutorization: string,
-                                          data: any,
-                                          logger: any ) {
+                                          data: any ): Promise<any> {
 
     let result = null;
 
@@ -60,8 +59,7 @@ class BusinessBackendClient {
 
       result = await V1BusinessDev001Service.callStartUpdateTipJob( backendConfig,
                                                                     headersConfig,
-                                                                    data,
-                                                                    logger );
+                                                                    data );
 
       //console.log( result );
 
@@ -103,8 +101,7 @@ class BusinessBackendClient {
 
       result = await V1BusinessDev001Service.callGetUpdateTipJobStatus( backendConfig,
                                                                         headersConfig,
-                                                                        data,
-                                                                        logger );
+                                                                        data );
 
       if ( result instanceof Error === false ) {
 

@@ -1,16 +1,17 @@
 import axios from "axios";
 
 //import CommonUtilities from "../utils/commonUtilities";
+import LoggerManager from "../utils/loggerManager";
 
-const debug = require( "debug" )( "V1BusinessDev001Service" );
+//const debug = require( "debug" )( "V1BusinessDev001Service" );
 
 class V1BusinessDev001Service {
 
   static async callGetEstablishment( backend: any,
                                      headers: any,
-                                     logger: any ): Promise<{ input: any, output: any }> {
+                                     logger: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -57,6 +58,11 @@ class V1BusinessDev001Service {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "BD0F35A8BC74", error );
+
+      result = error;
+
+      /*
       const strMark = "A71C4DB721ED";
 
       const debugMark = debug.extend( strMark );
@@ -70,6 +76,7 @@ class V1BusinessDev001Service {
         logger.error( error );
 
       }
+      */
 
     }
 
@@ -79,10 +86,9 @@ class V1BusinessDev001Service {
 
   static async callStartUpdateTipJob( backend: any,
                                       headers: any,
-                                      body: any,
-                                      logger: any ): Promise<{ input: any, output: any }> {
+                                      body: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -130,6 +136,11 @@ class V1BusinessDev001Service {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "07CAA3973707", error );
+
+      result = error;
+
+      /*
       const strMark = "A71C4DB721ED";
 
       const debugMark = debug.extend( strMark );
@@ -143,6 +154,7 @@ class V1BusinessDev001Service {
         logger.error( error );
 
       }
+      */
 
     }
 
@@ -153,10 +165,9 @@ class V1BusinessDev001Service {
 
   static async callGetUpdateTipJobStatus( backend: any,
                                           headers: any,
-                                          queryParams: any,
-                                          logger: any ): Promise<{ input: any, output: any }> {
+                                          queryParams: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -203,6 +214,11 @@ class V1BusinessDev001Service {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "A9B609B9575C", error );
+
+      result = error;
+
+      /*
       const strMark = "6328B772B17E";
 
       const debugMark = debug.extend( strMark );
@@ -216,6 +232,7 @@ class V1BusinessDev001Service {
         logger.error( error );
 
       }
+      */
 
     }
 

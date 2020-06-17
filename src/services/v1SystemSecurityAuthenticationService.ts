@@ -1,18 +1,18 @@
 import axios from "axios";
 
 //import CommonUtilities from "../utils/commonUtilities";
+import LoggerManager from "../utils/loggerManager";
 
-const debug = require( "debug" )( "V1SystemSecurityAuthenticationService" );
+//const debug = require( "debug" )( "V1SystemSecurityAuthenticationService" );
 
 class V1SystemSecurityAuthenticationService {
 
   static async callLogin( backend: any,
                           headers: any,
                           strUsername: string,
-                          strPassword: string,
-                          logger: any ): Promise<{ input: any, output: any }> {
+                          strPassword: string ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -69,6 +69,11 @@ class V1SystemSecurityAuthenticationService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "E9DEC6366C36", error );
+
+      result = error;
+
+      /*
       const strMark = "1DFC6EF03869";
 
       const debugMark = debug.extend( strMark );
@@ -82,6 +87,7 @@ class V1SystemSecurityAuthenticationService {
         logger.error( error );
 
       }
+      */
 
     }
 
@@ -90,8 +96,7 @@ class V1SystemSecurityAuthenticationService {
   }
 
   static async callTokenCheck( backend: any,
-                               headers: any,
-                               logger: any ): Promise<{ input: any, output: any }> {
+                               headers: any ): Promise<{ input: any, output: any }> {
 
     const result: any = {
 
@@ -139,6 +144,9 @@ class V1SystemSecurityAuthenticationService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "9CFE42581FB6", error );
+
+      /*
       const strMark = "DD5EBFB4BDEE";
 
       const debugMark = debug.extend( strMark );
@@ -152,6 +160,7 @@ class V1SystemSecurityAuthenticationService {
         logger.error( error );
 
       }
+      */
 
     }
 
@@ -160,8 +169,7 @@ class V1SystemSecurityAuthenticationService {
   }
 
   static async callLogout( backend: any,
-                           headers: any,
-                           logger: any ): Promise<{ input: any, output: any }> {
+                           headers: any ): Promise<{ input: any, output: any }> {
 
     const result: any = {
 
@@ -209,6 +217,9 @@ class V1SystemSecurityAuthenticationService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "07EC8794C71A", error );
+
+      /*
       const strMark = "88DD50269849";
 
       const debugMark = debug.extend( strMark );
@@ -222,6 +233,7 @@ class V1SystemSecurityAuthenticationService {
         logger.error( error );
 
       }
+      */
 
     }
 

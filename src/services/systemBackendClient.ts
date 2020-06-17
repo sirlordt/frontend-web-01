@@ -17,7 +17,7 @@ class SystemBackendClient {
 
   };
 
-  static getBackendConfig() {
+  static getBackendConfig(): any {
 
     //console.log( mainStore.getState().backend.active );
 
@@ -56,8 +56,7 @@ class SystemBackendClient {
   }
 
   static async callLogin( strUsername: string,
-                          strPassword: string,
-                          logger: any ) {
+                          strPassword: string ): Promise<any> {
 
     let result = null;
 
@@ -70,8 +69,7 @@ class SystemBackendClient {
       result = await V1SystemSecurityAuthenticationService.callLogin( backendConfig,
                                                                       headersConfig,
                                                                       strUsername,
-                                                                      strPassword,
-                                                                      logger );
+                                                                      strPassword );
 
     }
     catch ( error ) {
@@ -84,8 +82,7 @@ class SystemBackendClient {
 
   }
 
-  static async callTokenCheck( strAutorization: string,
-                               logger: any ) {
+  static async callTokenCheck( strAutorization: string ): Promise<any> {
 
     let result = null;
 
@@ -98,8 +95,7 @@ class SystemBackendClient {
       headersConfig.Authorization = strAutorization;
 
       result = await V1SystemSecurityAuthenticationService.callTokenCheck( backendConfig,
-                                                                           headersConfig,
-                                                                           logger );
+                                                                           headersConfig );
 
     }
     catch ( error ) {
@@ -112,8 +108,7 @@ class SystemBackendClient {
 
   }
 
-  static async callLogout( strAutorization: string,
-                           logger: any ) {
+  static async callLogout( strAutorization: string ): Promise<any> {
 
     let result = null;
 
@@ -126,8 +121,7 @@ class SystemBackendClient {
       headersConfig.Authorization = strAutorization;
 
       result = await V1SystemSecurityAuthenticationService.callLogout( backendConfig,
-                                                                       headersConfig,
-                                                                       logger );
+                                                                       headersConfig );
 
     }
     catch ( error ) {
@@ -140,8 +134,7 @@ class SystemBackendClient {
 
   }
 
-  static async callUserActions( strAutorization: string,
-                                logger: any ) {
+  static async callUserActions( strAutorization: string ): Promise<any> {
 
     let result = null;
 
@@ -154,8 +147,7 @@ class SystemBackendClient {
       headersConfig.Authorization = strAutorization;
 
       result = await V1SystemUserService.callUserActions( backendConfig,
-                                                          headersConfig,
-                                                          logger );
+                                                          headersConfig );
 
     }
     catch ( error ) {
@@ -168,8 +160,7 @@ class SystemBackendClient {
 
   }
 
-  static async callCreateBinaryAuth( strAutorization: string,
-                                     logger: any ) {
+  static async callCreateBinaryAuth( strAutorization: string ): Promise<any> {
 
     let result = null;
 
@@ -182,8 +173,7 @@ class SystemBackendClient {
       headersConfig.Authorization = strAutorization;
 
       result = await V1SystemBinaryService.callCreateAuth( backendConfig,
-                                                           headersConfig,
-                                                           logger );
+                                                           headersConfig );
 
       if ( result instanceof Error === false ) {
 
@@ -213,8 +203,7 @@ class SystemBackendClient {
 
   static async callUploadFile( strAutorization: string,
                                fileToUpload: any,
-                               uploadCallBack: any,
-                               logger: any ) {
+                               uploadCallBack: any ): Promise<any> {
 
     let result = null;
 
@@ -244,8 +233,7 @@ class SystemBackendClient {
       result = await V1SystemBinaryService.callUploadBinaryData( backendConfig,
                                                                  headersMultipart,
                                                                  binaryRequest,
-                                                                 uploadCallBack,
-                                                                 logger ); //This request must be fail
+                                                                 uploadCallBack ); //This request must be fail
 
       //console.log( result );
       if ( result instanceof Error === false ) {

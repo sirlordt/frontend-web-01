@@ -8,8 +8,7 @@ function tokenCheck( payload: any ): any {
 
   return async ( dispatch: any ) => {
 
-    const result = await backendClient.callTokenCheck( payload.authorization,
-                                                       payload.logger );
+    const result = await backendClient.callTokenCheck( payload.authorization );
 
     if ( result instanceof Error ) {
 

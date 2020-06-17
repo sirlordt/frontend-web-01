@@ -1,16 +1,16 @@
 import axios from "axios";
 
 //import CommonUtilities from "../utils/commonUtilities";
+import LoggerManager from "../utils/loggerManager";
 
-const debug = require( "debug" )( "V1SystemUserService" );
+//const debug = require( "debug" )( "V1SystemUserService" );
 
 class V1SystemUserService {
 
   static async callUserActions( backend: any,
-                                headers: any,
-                                logger: any ): Promise<{ input: any, output: any }> {
+                                headers: any ): Promise<{ input: any, output: any } | Error> {
 
-    const result: any = {
+    let result: any = {
 
       input: null,
       output: null
@@ -57,6 +57,11 @@ class V1SystemUserService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "CA9F7D9EAAE4", error );
+
+      result = error;
+
+      /*
       const strMark = "52BFB9ADD895";
 
       const debugMark = debug.extend( strMark );
@@ -70,6 +75,7 @@ class V1SystemUserService {
         logger.error( error );
 
       }
+      */
 
     }
 

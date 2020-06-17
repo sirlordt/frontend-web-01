@@ -8,8 +8,7 @@ function logout( payload: any ) {
 
   return async ( dispatch: any ) => {
 
-    const result = await backendClient.callLogout( payload.authorization,
-                                                   payload.logger );
+    const result = await backendClient.callLogout( payload.authorization );
 
     if ( result instanceof Error ) {
 

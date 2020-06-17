@@ -17,6 +17,7 @@ import mainStore from "./redux/store";
 
 import "./App.scss";
 import Loading from "./components/loading";
+import LoggerManager from "./utils/loggerManager";
 
 const RootPage = React.lazy( () => import( "./pages/root" ) );
 
@@ -30,6 +31,23 @@ else {
   localStorage.removeItem( "debug" );
 
 }
+
+//Init the main logger
+LoggerManager.createMainLogger();
+
+/*
+LoggerManager.mark( "B1E3D2B4D6F1" );
+LoggerManager.debug( "Hello this a debug message 1" );
+LoggerManager.debug( "Another message 2" );
+LoggerManager.debug( "Another message 3" );
+
+LoggerManager.debug( { Message: "My data", Data: "My data", OtherData: "My other data" } );
+
+LoggerManager.mark( "96801D876D99" );
+LoggerManager.debug( "Hello this a debug message 4" );
+LoggerManager.debug( "Another message 5" );
+LoggerManager.debug( "Another message 6" );
+*/
 
 function App() {
 

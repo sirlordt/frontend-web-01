@@ -15,6 +15,7 @@ import rootReducer from "../reducers";
 import CommonUtilities from "../../utils/commonUtilities";
 
 import initialState from "../reducers/initialState";
+//import LoggerManager from "../../utils/loggerManager";
 
 declare var window: any;
 
@@ -78,6 +79,7 @@ if ( initialStateBackendData ) {
 
 }
 
+//LoggerManager.markInfo( "C7F4E0E7418F", initialState.backend.active );
 
 //********************
 const mainStore = createStore(

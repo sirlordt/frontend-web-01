@@ -9,8 +9,7 @@ function login( payload: any ): any {
   return async ( dispatch: any ) => {
 
     const result = await backendClient.callLogin( payload.username,
-                                                  payload.password,
-                                                  payload.logger );
+                                                  payload.password );
 
     if ( result instanceof Error ) {
 

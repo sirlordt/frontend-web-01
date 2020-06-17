@@ -1,14 +1,14 @@
 import axios from "axios";
 
 //import CommonUtilities from "../utils/commonUtilities";
+import LoggerManager from "../utils/loggerManager";
 
-const debug = require( "debug" )( "V1SystemBinaryService" );
+//const debug = require( "debug" )( "V1SystemBinaryService" );
 
 class V1SystemBinaryService {
 
   static async callCreateAuth( backend: any,
-                               headers: any,
-                               logger: any ): Promise<{ input: any, output: any } | Error> {
+                               headers: any ): Promise<{ input: any, output: any } | Error> {
 
     let result: any = {
 
@@ -50,6 +50,11 @@ class V1SystemBinaryService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "86AED92A79A1", error );
+
+      result = error;
+
+      /*
       const strMark = "1316C841F830";
 
       const debugMark = debug.extend( strMark );
@@ -65,6 +70,7 @@ class V1SystemBinaryService {
       }
 
       result = error;
+      */
 
     }
 
@@ -75,8 +81,7 @@ class V1SystemBinaryService {
   static async callUploadBinaryData( backend: any,
                                      headers: any,
                                      body: any,
-                                     uploadCallback: any,
-                                     logger: any ): Promise<{ input: any, output: any } | Error> {
+                                     uploadCallback: any ): Promise<{ input: any, output: any } | Error> {
 
    let result: any = {
 
@@ -131,6 +136,11 @@ class V1SystemBinaryService {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "4723E6E2E608", error );
+
+      result = error;
+
+      /*
       const strMark = "7534D72B3364";
 
       const debugMark = debug.extend( strMark );
@@ -146,6 +156,7 @@ class V1SystemBinaryService {
       }
 
       result = error;
+      */
 
     }
 
