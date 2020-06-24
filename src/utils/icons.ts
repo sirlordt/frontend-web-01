@@ -27,7 +27,10 @@ import {
   faFileExcel,
   faServer,
   faPenAlt,
-  faPencilAlt
+  faPencilAlt,
+  faAt,
+  faPhone,
+  faCode
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -72,4 +75,8 @@ library.add( faCheckSquare,
              faPenAlt,
              faEdit,
              faPencilAlt,
-             faInstagram );
+             faInstagram,
+             faAt,
+             faUserPlus,
+             faPhone,
+             faCode );

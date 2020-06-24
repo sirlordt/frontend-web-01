@@ -81,12 +81,13 @@ class V1SystemBinaryService {
   static async callUploadBinaryData( backend: any,
                                      headers: any,
                                      body: any,
-                                     uploadCallback: any ): Promise<{ input: any, output: any } | Error> {
+                                     uploadCallback: any ): Promise<{ input: any, output: any, error: Error }> {
 
    let result: any = {
 
       input: null,
-      output: null
+      output: null,
+      error: null
 
     };
 
@@ -138,7 +139,7 @@ class V1SystemBinaryService {
 
       LoggerManager.markError( "4723E6E2E608", error );
 
-      result = error;
+      result.error = error;
 
       /*
       const strMark = "7534D72B3364";

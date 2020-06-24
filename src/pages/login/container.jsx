@@ -12,13 +12,14 @@ import {
 
 import {
   FacebookProvider,
-  Login
+  Login,
 } from 'react-facebook';
 
 //import { IntagramLogin } from 'react-instagram-login';
 
-import { GoogleLogin } from 'react-google-login';
+import GoogleLogin from 'react-google-login';
 
+//import InstagramLogin from 'react-instagram-login';
 
 import {
   CButton,
@@ -52,12 +53,16 @@ import PropTypes from "prop-types";
 
 import {
   login,
+  loginGoogle,
+  loginFacebook,
+  loginInstagram,
   showModal
 } from "../../redux/actions";
 
 import SystemUtils from "../../utils/systemUtils";
 
 import logo from "../../assets/img/brand/coreui-pro-base.svg";
+import LoggerManager from "../../utils/loggerManager";
 
 const propTypes = {
 
@@ -76,13 +81,16 @@ class LoginPage extends Component {
     this.state = {
 
       id: SystemUtils.getUUIDv4(),
+
       fieldUsernameInvalid: false,
-      username: "",
+      fieldUsernameValue: "",
       fieldUsernameMessage: "",
+
       fieldPasswordInvalid: false,
-      password: "",
+      fieldPasswordValue: "",
       fieldPasswordMessage: "",
       fieldPasswordShowContent: false,
+
       buttonLoginDisabled: false
 
     };
@@ -107,9 +115,10 @@ class LoginPage extends Component {
     //componentDidUpdate( prevProps ) {
 
     /*
-    console.log( "id =>", this.state.id );
-    console.log( "props =>", this.props );
-    console.log( "prevProps =>", prevProps );
+    LoggerManager.mark( "1D135A36F0A3" );
+    LoggerManager.debug( "E3FDC2CF0417", "id =>", this.state.id );
+    LoggerManager.debug( "5776C1FE7A50","props =>", this.props );
+    LoggerManager.debug( "7BB590B0EE98", "prevProps =>", prevProps );
     */
 
     if ( this.props.authentication.results[ this.state.id ]?.mark !== nextProps.authentication.results[ this.state.id ]?.mark ) {
@@ -165,11 +174,11 @@ class LoginPage extends Component {
 
     this.setState( {
 
-      [ event.target.name ]: event.target.value
+      [ "field" + event.target.name + "Value" ]: event.target.value
 
     } );
 
-    if ( event.target.name === "username" ) {
+    if ( event.target.name === "Username" ) {
 
       this.setState( () => ( {
 
@@ -179,7 +188,7 @@ class LoginPage extends Component {
       } ) );
 
     }
-    else if ( event.target.name === "password" ) {
+    else if ( event.target.name === "Password" ) {
 
       this.setState( () => ( {
 
@@ -216,8 +225,8 @@ class LoginPage extends Component {
 
     const t = this.props.t; //Translate functions injected by withTranslation function
 
-    const bFieldUsernameInvalid = ( !this.state.username || this.state.username.trim() === "" );
-    const bFieldPasswordInvalid = ( !this.state.password || this.state.password.trim() === "" );
+    const bFieldUsernameInvalid = ( !this.state.fieldUsernameValue || this.state.fieldUsernameValue.trim() === "" );
+    const bFieldPasswordInvalid = ( !this.state.fieldPasswordValue || this.state.fieldPasswordValue.trim() === "" );
 
     if ( bFieldUsernameInvalid ||
          bFieldPasswordInvalid ) {
@@ -225,9 +234,9 @@ class LoginPage extends Component {
       this.setState( {
 
         fieldUsernameInvalid: bFieldUsernameInvalid,
-        fieldUsernameMessage: bFieldUsernameInvalid ? t( "Username field is required" ) : "",
+        fieldUsernameMessage: bFieldUsernameInvalid ? t( "The Username field is required" ) : "",
         fieldPasswordInvalid: bFieldPasswordInvalid,
-        fieldPasswordMessage: bFieldPasswordInvalid ? t( "Password field is required" ) : ""
+        fieldPasswordMessage: bFieldPasswordInvalid ? t( "The Password field is required" ) : ""
 
       } );
 
@@ -247,8 +256,8 @@ class LoginPage extends Component {
       this.props.login( {
 
         transactionId: this.state.id,
-        username: this.state.username,
-        password: this.state.password
+        username: this.state.fieldUsernameValue,
+        password: this.state.fieldPasswordValue
 
       } );
 
@@ -272,61 +281,94 @@ class LoginPage extends Component {
 
     event && event.preventDefault();
 
-  }
+    this.props.history.replace( {
 
-  onClickButtonFacebook = ( event ) => {
+      pathname: "/signup"
 
-    event && event.preventDefault();
-
-  }
-
-  onClickButtonTwitter = ( event ) => {
-
-    event && event.preventDefault();
+    } );
 
   }
 
-  responseSuccessGoogle = ( response ) => {
+  responseSuccessGoogle = async ( response ) => {
 
-    console.log( "Google Success => ", response );
+    LoggerManager.markLog( "CD73E33A9E73", "Google Success => ", response );
 
-  }
+    this.props.loginGoogle( {
 
-  responseFailureGoogle = ( response ) => {
+      transactionId: this.state.id,
 
-    console.log( "Google Failure => ", response );
+      loginData: {
 
-  }
+        Token: response.tokenId
 
-  responseSuccessFacebook = ( response ) => {
+      }
 
-    console.log( "Facebook Success => ", response );
-
-  }
-
-  responseFailureFacebook = ( response ) => {
-
-    console.log( "Facebook Failure => ", response );
+    } );
 
   }
 
-  responseSuccessInstagram = ( response ) => {
+  responseFailureGoogle = async ( response ) => {
 
-    console.log( "Instagram Success => ", response );
-
-  }
-
-  responseFailureInstagram = ( response ) => {
-
-    console.log( "Instagram Failure => ", response );
+    LoggerManager.markLog( "EF466C1A1178", "Google Failure => ", response );
 
   }
 
+  responseSuccessFacebook = async ( response ) => {
+
+    LoggerManager.markLog( "ECF3F9A9A972", "Facebook Success => ", response );
+
+    this.props.loginFacebook( {
+
+      transactionId: this.state.id,
+
+      loginData: {
+
+        UserId: response.tokenDetail.userID,
+        Token: response.tokenDetail.accessToken,
+
+      }
+
+    } );
+
+  }
+
+  responseFailureFacebook = async ( response ) => {
+
+    LoggerManager.markLog( "173F4AB03525", "Facebook Failure => ", response );
+
+  }
+
+  responseSuccessInstagram = async ( response ) => {
+
+    LoggerManager.markLog( "D31A00A0A4A4", "Instagram Success => ", response );
+
+    this.props.loginInstagram( {
+
+      transactionId: this.state.id,
+
+      loginData: {
+
+        Token: response.token
+
+      }
+
+    } );
+
+  }
+
+  responseFailureInstagram = async ( response ) => {
+
+    LoggerManager.markLog( "DFB3FBB97D69", "Instagram Failure => ", response );
+
+  }
+
+  /*
   onClickButtonGoogle = ( event ) => {
 
     event && event.preventDefault();
 
   }
+  */
 
   onClickButtonAccounts = ( event ) => {
 
@@ -390,7 +432,7 @@ class LoginPage extends Component {
     );
     */
 
-    //console.log( process.env.REACT_APP_REACT_SCRIPT );
+    //LoggerManager.markLog( "DCDC2F3D9460", process.env.REACT_APP_REACT_SCRIPT );
 
     const t = this.props.t; //Translate functions injected by withTranslation function
 
@@ -434,13 +476,17 @@ class LoginPage extends Component {
 
                       </CFormGroup>
 
-                      <CFormGroup className="mb-0">
+                      <CFormGroup className="mb-2">
 
-                        <CLabel htmlFor="username">
+                        <CRow className="m-0">
 
-                          <Trans i18nKey="Username" />
+                          <CLabel className="margin-bottom-0-2-rem" htmlFor="Username">
 
-                        </CLabel>
+                            <Trans i18nKey="Username" /> *
+
+                          </CLabel>
+
+                        </CRow>
 
                         <CInputGroup>
 
@@ -458,8 +504,8 @@ class LoginPage extends Component {
                             invalid={ this.state.fieldUsernameInvalid }
                             className="box-shadow-none"
                             type="text"
-                            id="username"
-                            name="username"
+                            id="Username"
+                            name="Username"
                             placeholder={ t( "Username" ) }
                             autoComplete="username"
                             onChange={ this.onChange }
@@ -467,14 +513,24 @@ class LoginPage extends Component {
 
                         </CInputGroup>
 
-                        <CInvalidFeedback style={ {
-                          display: "block",
-                          height: "1.5em"
-                        } }>
+                        {
 
-                          { this.state.fieldUsernameMessage ? this.state.fieldUsernameMessage : "" }
+                          this.state.fieldUsernameMessage ?
+                          (
+                            <CInvalidFeedback style={ {
+                              display: "block"
+                            } }>
 
-                        </CInvalidFeedback>
+                              { this.state.fieldUsernameMessage ? this.state.fieldUsernameMessage : "" }
+
+                            </CInvalidFeedback>
+                          )
+                          :
+                          (
+                            null
+                          )
+
+                        }
 
                       </CFormGroup>
 
@@ -485,13 +541,10 @@ class LoginPage extends Component {
                           <CCol xs="4" className="pl-0 pr-0">
 
                             <CLabel
-                              className="mb-0"
-                              style={ {
-                                padding: "0.375rem 0"
-                              } }
+                              className="margin-bottom-0-2-rem"
                               htmlFor="password">
 
-                              <Trans i18nKey="Password" />
+                              <Trans i18nKey="Password" /> *
 
                             </CLabel>
 
@@ -502,7 +555,7 @@ class LoginPage extends Component {
                             <CButton
                               id="buttonForgotPassword"
                               color="link"
-                              className="px-0 box-shadow-none"
+                              className="p-0 box-shadow-none margin-bottom-0-2-rem"
                               onClick={ this.onClickButtonForgotPassword }>
 
                               <Trans i18nKey="Forgot your password?" />
@@ -529,8 +582,8 @@ class LoginPage extends Component {
                             invalid={ this.state.fieldPasswordInvalid }
                             className="box-shadow-none field-password"
                             type={ this.state.fieldPasswordShowContent ? "text" : "password" }
-                            id="password"
-                            name="password"
+                            id="Password"
+                            name="Password"
                             placeholder={ t( "Password" ) }
                             autoComplete="current-password"
                             onChange={ this.onChange }
@@ -549,14 +602,25 @@ class LoginPage extends Component {
 
                         </CInputGroup>
 
-                        <CInvalidFeedback style={ {
-                          display: "block",
-                          height: "1.5em"
-                        } }>
+                       {
 
-                          { this.state.fieldPasswordMessage ? this.state.fieldPasswordMessage : "" }
+                         this.state.fieldPasswordMessage ?
 
-                        </CInvalidFeedback>
+                         (
+                            <CInvalidFeedback style={ {
+                              display: "block"
+                            } }>
+
+                              { this.state.fieldPasswordMessage ? this.state.fieldPasswordMessage : "" }
+
+                            </CInvalidFeedback>
+                         )
+                         :
+                         (
+                           null
+                         )
+
+                       }
 
                       </CFormGroup>
 
@@ -628,7 +692,6 @@ class LoginPage extends Component {
                                   disabled={ loading }
                                 >
 
-
                                   <FontAwesomeIcon icon={ [ "fab", "facebook" ] } />
 
                                 </CButton>
@@ -640,42 +703,28 @@ class LoginPage extends Component {
                           </Login>
 
                         </FacebookProvider>
+
                         {/*
-                        <FacebookLogin
-                          appId={ process.env.REACT_APP_FACEBOOK_APP_ID }
-                          autoload
-                          render={ renderProps => (
-
-                            <CButton
-                              className="btn-facebook box-shadow-none btn-brand mr-3"
-                              onClick={ renderProps.onClick }
-                              disabled={ renderProps.disabled }
-                              alt="Facebook">
-
-                              <FontAwesomeIcon icon={ [ "fab", "facebook" ] } />
-
-                            </CButton>
-
-                          )}
-                          callback={ this.responseFacebook }
-                          //cookiePolicy={'single_host_origin'}
-                          //approvalPrompt="force"
-                          //responseType='code,token'
-                        />
-                          */}
-
                         <CTooltip content="Instagram">
 
-                          <CButton
-                            className="btn-instagram box-shadow-none btn-brand mr-3"
-                            onClick={ this.onClickButtonInstagram }
-                            alt="Instagram">
+                          <div className=" mr-3">
 
-                            <FontAwesomeIcon icon={ [ "fab", "instagram" ] } />
+                            <InstagramLogin
+                              clientId={ process.env.REACT_APP_INSTAGRAM_CLIENT_ID }
+                              onSuccess={ this.responseSuccessInstagram }
+                              onFailure={ this.responseFailureInstagram }
+                              cssClass="btn btn-instagram box-shadow-none btn-brand intagram-button"
+                              buttonText=""
+                            >
 
-                          </CButton>
+                              <FontAwesomeIcon icon={ [ "fab", "instagram" ] } />
+
+                            </InstagramLogin>
+
+                          </div>
 
                         </CTooltip>
+                        */}
 
                         <GoogleLogin
                           clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
@@ -700,8 +749,6 @@ class LoginPage extends Component {
                           )}
                           onSuccess={ this.responseSuccessGoogle }
                           onFailure={ this.responseFailureGoogle }
-                          //cookiePolicy={'single_host_origin'}
-                          //approvalPrompt="force"
                           responseType='code,token'
                         />
 
@@ -796,6 +843,9 @@ LoginPage.defaultProps = defaultProps;
 
 const mapDispatchToProps = {
   login,
+  loginGoogle,
+  loginFacebook,
+  loginInstagram,
   showModal
 };
 

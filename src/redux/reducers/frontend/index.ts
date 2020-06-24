@@ -36,7 +36,7 @@ function reducer( state = initialState.frontend, action: any ): any {
 
   let result: any = null;
 
-  //console.log( "Action => ", action.id );
+  //LoggerManager.markLog( "677D2F6E63AF", "Action => ", action.id );
 
   switch ( action.type ) {
 

@@ -1,21 +1,20 @@
 import {
-  _LOGIN_SUCCESS,
-  _LOGIN_FAILED
+  _USER_SIGNUP_SUCCESS,
+  _USER_SIGNUP_FAILED
 } from "../constants";
 import systemBackendClient from "../../services/systemBackendClient";
 
-function login( payload: any ): any {
+function signup( payload: any ): any {
 
   return async ( dispatch: any ) => {
 
-    const result = await systemBackendClient.callLogin( payload.username,
-                                                        payload.password );
+    const result = await systemBackendClient.callUserSignup( payload.signupData );
 
     if ( result instanceof Error ) {
 
       dispatch(
         {
-          type: _LOGIN_FAILED,
+          type: _USER_SIGNUP_FAILED,
           payload: {
             response: {
               StatusCode: 400,
@@ -42,13 +41,14 @@ function login( payload: any ): any {
               result.output.body ) {
 
       if ( result.output.body.IsError === false &&
-           result.output.body.Code === "SUCCESS_LOGIN" ) {
+           ( result.output.body.Code === "SUCCESS_USER_SIGNUP" ||
+             result.output.body.Code === "SUCCESS_USER_SIGNUP_MANUAL_ACTIVATION" ) ) {
 
         result.output.body.Backend = result.output.Backend;
 
         dispatch(
           {
-            type: _LOGIN_SUCCESS,
+            type: _USER_SIGNUP_SUCCESS,
             payload: {
               response: result.output.body,
               callback: payload.callback,
@@ -62,7 +62,7 @@ function login( payload: any ): any {
 
         dispatch(
           {
-            type: _LOGIN_FAILED,
+            type: _USER_SIGNUP_FAILED,
             payload: {
               response: result.output.body,
               callback: payload.callback,
@@ -78,7 +78,7 @@ function login( payload: any ): any {
 
       dispatch(
         {
-          type: _LOGIN_FAILED,
+          type: _USER_SIGNUP_FAILED,
           payload: {
             response: {
               StatusCode: 500,
@@ -105,4 +105,4 @@ function login( payload: any ): any {
 
 }
 
-export default login;
+export default signup;

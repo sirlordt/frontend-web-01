@@ -53,6 +53,8 @@ import {
 import SystemUtils from "../../../utils/systemUtils";
 import SystemBackendClient from "../../../services/systemBackendClient";
 import BusinessBackendClient from "../../../services/businessBackendClient";
+import { withWindowSize } from "../../../hoc/withWindowSize";
+import LoggerManager from "../../../utils/loggerManager";
 
 const propTypes = {
 
@@ -101,7 +103,7 @@ class UpdateTipView extends Component {
 
     try {
 
-      const result = await BusinessBackendClient.callGetEstablishment( this.props.authentication.accounts[ this.props.authentication.active ].Authorization, null );
+      const result = await BusinessBackendClient.callGetEstablishment( this.props.authentication.accounts[ this.props.authentication.active ].Authorization );
 
       if ( result instanceof Error === false ) {
 
@@ -115,14 +117,14 @@ class UpdateTipView extends Component {
       }
       else {
 
-        console.log( result );
+        LoggerManager.markLog( "7780E262226A", result );
 
       }
 
     }
     catch ( error ) {
 
-      console.log( error );
+      LoggerManager.markError( "CD73E33A9E73", error );
 
     }
 
@@ -140,7 +142,7 @@ class UpdateTipView extends Component {
 
   onChange = ( event ) => {
 
-    //console.log( event );
+    //LoggerManager.markLog( "C9851CFF8602", event );
 
     this.setState( {
 
@@ -181,7 +183,7 @@ class UpdateTipView extends Component {
 
   onChangeFileToUpload = ( event ) => {
 
-    //console.log( event.target.files[ 0 ] );
+    //LoggerManager.markLog( "A849127B33DE", event.target.files[ 0 ] );
 
     this.setState( {
 
@@ -259,13 +261,13 @@ class UpdateTipView extends Component {
                                                                            null );
 
           const jobId = await BusinessBackendClient.callStartUpdateTipUberJob( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                           {
-                                                                             Id: uploadResponse.Id,
-                                                                             Date: this.state.selectedDate,
-                                                                             EstablishmentId: this.state.selectedEstablishment,
-                                                                             Path: uploadResponse.Path
-                                                                           },
-                                                                           null );
+                                                                               {
+                                                                                 Id: uploadResponse.Id,
+                                                                                 Date: this.state.selectedDate,
+                                                                                 EstablishmentId: this.state.selectedEstablishment,
+                                                                                 Path: uploadResponse.Path
+                                                                               },
+                                                                               null );
 
           this.setState( () => ( {
             uploadProgressLabel: `${t( "Uploading file" )}...`,
@@ -273,7 +275,7 @@ class UpdateTipView extends Component {
             jobId
           } ) );
 
-          //console.log( jobId );
+          //LoggerManager.markLog( "8DAE04C88B7F", jobId );
 
           intervalHandler = setInterval( async () => {
 
@@ -284,7 +286,7 @@ class UpdateTipView extends Component {
                                                                                               },
                                                                                               null );
 
-            //console.log( statusResponse );
+            //LoggerManager.markLog( "A90FD41D96E9", statusResponse );
 
             if ( statusResponse instanceof Error === false ) {
 
@@ -351,7 +353,7 @@ class UpdateTipView extends Component {
       }
       catch ( error ) {
 
-        console.log( error );
+        LoggerManager.markError( "2C3F15F133C5",  error );
 
       }
 
@@ -362,7 +364,7 @@ class UpdateTipView extends Component {
   render() {
 
     //const innerHeight = window.innerHeight;
-    //console.log(  );
+    //LoggerManager.markLog( "3E84F5C9DD81",   );
 
     //const t = this.props.t; //Translate functions injected by withTranslation function
     //<CContainer style={ { "height": innerHeight - 212, "overflowY": "auto" } }>
@@ -387,6 +389,7 @@ class UpdateTipView extends Component {
                     <h1>
 
                       <Trans i18nKey="Update Tips Uber" />
+                      { /*this.props.windowSize*/ }
 
                     </h1>
 
@@ -674,4 +677,4 @@ const connectedWrapper = connect( mapStateToProps, mapDispatchToProps );
 
 const connectedComponent = connectedWrapper( UpdateTipView );
 
-export default withRouter( withTranslation()( connectedComponent ) );
+export default withWindowSize( withRouter( withTranslation()( connectedComponent ) ) );

@@ -306,7 +306,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ( state ) => {
 
-  //console.log( "Home State => ", state );
+  //LoggerManager.markLog( "1A5E5B59F480", "Home State => ", state );
 
   return {
     authentication: state.authentication,

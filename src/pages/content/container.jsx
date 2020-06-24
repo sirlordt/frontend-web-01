@@ -34,7 +34,7 @@ class container extends Component {
     // </CContainer> className="c-main"
 
     /*
-    console.log( this.props.location );
+    LoggerManager.markLog( "290CBE41257E", this.props.location );
 
     return (
 

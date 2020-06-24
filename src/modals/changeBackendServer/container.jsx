@@ -122,7 +122,7 @@ class ChangeBackendServerModal extends Component {
           this.selectedItem.focus();
           //this.selectedItem.scrollIntoView( false );
 
-          //console.log( this.selectedIndex );
+          //LoggerManager.markLog( "7DBE0CAB50FF", this.selectedIndex );
 
         }
 
@@ -144,7 +144,7 @@ class ChangeBackendServerModal extends Component {
 
   onListKeyPressed = ( key, event ) => {
 
-    //{ ( key, event ) => console.log(`do something upon keydown event of ${key}`)}
+    //{ ( key, event ) => LoggerManager.markLog( "413D3707F43C", `do something upon keydown event of ${key}`)}
     if ( key === "down" && this.selectedIndex + 1 < this.itemList.length ) {
 
       this.onSelectBackendServer( this.itemList[ this.selectedIndex + 1 ] );

@@ -4,12 +4,11 @@ import {
 } from "../constants";
 import systemBackendClient from "../../services/systemBackendClient";
 
-function login( payload: any ): any {
+function loginGoogle( payload: any ): any {
 
   return async ( dispatch: any ) => {
 
-    const result = await systemBackendClient.callLogin( payload.username,
-                                                        payload.password );
+    const result = await systemBackendClient.callLoginGoogle( payload.loginData );
 
     if ( result instanceof Error ) {
 
@@ -105,4 +104,4 @@ function login( payload: any ): any {
 
 }
 
-export default login;
+export default loginGoogle;

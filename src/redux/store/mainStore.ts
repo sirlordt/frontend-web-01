@@ -22,7 +22,7 @@ declare var window: any;
 const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 //********************
-const initialStateAccountsData = CommonUtilities.parseJSON( localStorage.getItem( "_ACCOUNTS_DATA" ) as any, null );
+const initialStateAccountsData = CommonUtilities.parseJSON( localStorage.getItem( "_ACCOUNTS_DATA" ) as any );
 
 if ( initialStateAccountsData ) {
 
@@ -32,7 +32,7 @@ if ( initialStateAccountsData ) {
 }
 
 //********************
-const initialStateFrontendData = CommonUtilities.parseJSON( localStorage.getItem( "_FRONTEND_DATA" ) as any, null ) || {};
+const initialStateFrontendData = CommonUtilities.parseJSON( localStorage.getItem( "_FRONTEND_DATA" ) as any ) || {};
 
 let strUseThisLanguage: string = detectBrowserLanguage().replace( "-", "_" );
 
@@ -66,7 +66,7 @@ initialState.frontend.isRightSidebarOpen = initialStateFrontendData.isRightSideb
 i18n.changeLanguage( initialState.frontend.language );
 
 //********************
-const initialStateBackendData = CommonUtilities.parseJSON( localStorage.getItem( "_BACKEND_DATA" ) as any, null ) || {};
+const initialStateBackendData = CommonUtilities.parseJSON( localStorage.getItem( "_BACKEND_DATA" ) as any ) || {};
 
 if ( initialStateBackendData ) {
 
@@ -79,7 +79,7 @@ if ( initialStateBackendData ) {
 
 }
 
-//LoggerManager.markInfo( "C7F4E0E7418F", initialState.backend.active );
+//LoggerManager.markLog( "C7F4E0E7418F", initialState.backend.active );
 
 //********************
 const mainStore = createStore(
@@ -88,6 +88,6 @@ const mainStore = createStore(
   storeEnhancers( applyMiddleware( thunkMiddleware ) ) //forbiddenWordsMiddleware,
 );
 
-//console.log( mainStore.getState() );
+//LoggerManager.markLog( "5D855C0D8468", mainStore.getState() );
 
 export default mainStore;

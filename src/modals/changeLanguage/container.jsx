@@ -126,7 +126,7 @@ class ChangeLanguageModal extends Component {
           this.selectedItem.focus();
           //this.selectedItem.scrollIntoView( false );
 
-          //console.log( this.selectedIndex );
+          //LoggerManager.markLog( "96AAA18136B1", this.selectedIndex );
 
         }
 
@@ -148,7 +148,7 @@ class ChangeLanguageModal extends Component {
 
   onListKeyPressed = ( key, event ) => {
 
-    //{ ( key, event ) => console.log(`do something upon keydown event of ${key}`)}
+    //{ ( key, event ) => LoggerManager.markLog( "AE7BAD8A9225", `do something upon keydown event of ${key}`)}
     if ( key === "down" && this.selectedIndex + 1 < this.itemList.length ) {
 
       this.onSelectLanguage( this.itemList[ this.selectedIndex + 1 ] );
@@ -297,7 +297,7 @@ class ChangeLanguageModal extends Component {
                           action
                           active={ this.state.selectedLanguage === languageInfo.code }
                           onClick={ () => this.onSelectLanguage( languageInfo.code ) }
-                          //onFocus= { () => { console.log( "Focused" ) } }
+                          //onFocus= { () => { LoggerManager.markLog( "993A2601E6EC",  "Focused" ) } }
                           innerRef={ ( element ) => {
 
                             if ( this.state.selectedLanguage === languageInfo.code ) {

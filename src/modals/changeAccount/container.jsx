@@ -217,7 +217,7 @@ class ChangeAccountModal extends Component {
           this.selectedItem.focus();
           //this.selectedItem.scrollIntoView( false );
 
-          //console.log( this.selectedIndex );
+          //LoggerManager.markLog( "097E943FB36E", this.selectedIndex );
 
         }
 

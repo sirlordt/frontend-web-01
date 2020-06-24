@@ -1,9 +1,8 @@
-
-const debug = require( "debug" )( "CommonUtilities" );
+import LoggerManager from "./loggerManager";
 
 class CommonUtilities {
 
-  static parseJSON( strJSONToParse: string, logger: any ): any {
+  static parseJSON( strJSONToParse: string ): any {
 
     let result = {}; //Safe empty object
 
@@ -14,19 +13,7 @@ class CommonUtilities {
     }
     catch ( error ) {
 
-      const strMark = "D72A94FD3E4B";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
+      LoggerManager.markError( "D72A94FD3E4B", error );
 
     }
 
@@ -101,6 +88,39 @@ class CommonUtilities {
     catch ( error ) {
 
       bResult = false;
+      //
+
+    }
+
+    return bResult;
+
+  }
+
+  public static isValidDateInFormat01( strDate: string ): boolean {
+
+    let bResult = false;
+
+    try {
+
+      const regExp = /^\d{4}-\d{2}-\d{2}$/;
+
+      if ( strDate.match( regExp ) ) {
+
+        const date = new Date( strDate );
+
+        const dateAsNum = date.getTime();
+
+        if ( dateAsNum && isNaN( dateAsNum ) === false ) {
+
+          bResult = date.toISOString().slice( 0,10 ) === strDate;
+
+        }
+
+      }
+
+    }
+    catch ( error ) {
+
       //
 
     }

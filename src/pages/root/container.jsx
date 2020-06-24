@@ -38,6 +38,8 @@ import ModalManager from "../../modals/manager";
 // Containers
 const HomePage = React.lazy( () => import( "../home" ) );
 const LoginPage = React.lazy( () => import( "../login" ) );
+const SignupPage = React.lazy( () => import( "../signup" ) );
+const SignupActivatePage = React.lazy( () => import( "../signupActivate" ) );
 
 /*
 const modalPages = [
@@ -188,9 +190,10 @@ class RootPage extends Component {
     }
     */
 
-    //console.log( this.props.location.pathname );
-    //console.log( this.props );
-          /*
+    //LoggerManager.mark( "68D30B472F5D" );
+    //LoggerManager.debug( this.props.location.pathname );
+    //LoggerManager.debug( this.props );
+    /*
       <Route
         render={({ location }) => {
 
@@ -219,16 +222,19 @@ class RootPage extends Component {
             timeout={500}
             classNames="fade-transition"
             key={this.props.location.pathname}
-          >
+          > location={this.props.location}
          */}
 
-            <Switch location={this.props.location}>
+            <Switch >
               <Route exact path="/login" name="Login Page" render={ ( props ) => <LoginPage { ...props } /> } />
+              <Route exact path="/signup" name="Signup Page" render={ ( props ) => <SignupPage { ...props } /> } />
+              <Route exact path="/signup/activate" name="Signup Activation Page" render={ ( props ) => <SignupActivatePage { ...props } /> } />
               <Route exact path="/home" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
               <Route path="/" name="Home Page" extact render={ ( props ) => <HomePage { ...props } /> } />
             </Switch>
 
           {/*
+
           </CSSTransition>
 
         </SwitchTransition>

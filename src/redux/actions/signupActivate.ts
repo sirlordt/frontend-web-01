@@ -1,21 +1,20 @@
 import {
-  _LOGIN_SUCCESS,
-  _LOGIN_FAILED
+  _USER_ACTIVATE_SUCCESS,
+  _USER_ACTIVATE_FAILED
 } from "../constants";
 import systemBackendClient from "../../services/systemBackendClient";
 
-function login( payload: any ): any {
+function signupActivate( payload: any ): any {
 
   return async ( dispatch: any ) => {
 
-    const result = await systemBackendClient.callLogin( payload.username,
-                                                        payload.password );
+    const result = await systemBackendClient.callUserSignupActivate( payload.signupData );
 
     if ( result instanceof Error ) {
 
       dispatch(
         {
-          type: _LOGIN_FAILED,
+          type: _USER_ACTIVATE_FAILED,
           payload: {
             response: {
               StatusCode: 400,
@@ -42,13 +41,13 @@ function login( payload: any ): any {
               result.output.body ) {
 
       if ( result.output.body.IsError === false &&
-           result.output.body.Code === "SUCCESS_LOGIN" ) {
+           result.output.body.Code === "SUCCESS_USER_ACTIVATION" ) {
 
         result.output.body.Backend = result.output.Backend;
 
         dispatch(
           {
-            type: _LOGIN_SUCCESS,
+            type: _USER_ACTIVATE_SUCCESS,
             payload: {
               response: result.output.body,
               callback: payload.callback,
@@ -62,7 +61,7 @@ function login( payload: any ): any {
 
         dispatch(
           {
-            type: _LOGIN_FAILED,
+            type: _USER_ACTIVATE_FAILED,
             payload: {
               response: result.output.body,
               callback: payload.callback,
@@ -78,7 +77,7 @@ function login( payload: any ): any {
 
       dispatch(
         {
-          type: _LOGIN_FAILED,
+          type: _USER_ACTIVATE_FAILED,
           payload: {
             response: {
               StatusCode: 500,
@@ -105,4 +104,4 @@ function login( payload: any ): any {
 
 }
 
-export default login;
+export default signupActivate;

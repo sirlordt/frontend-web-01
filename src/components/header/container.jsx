@@ -281,7 +281,13 @@ class Header extends Component {
 
                     <CButton
                       className="ml-2 box-shadow-none"
-                      color="success">
+                      color="success"
+                      onClick={ () => {
+
+                        this.props.history.push( "/signup" );
+
+                      } }
+                    >
 
                       <FontAwesomeIcon icon="user-plus" />
 
@@ -376,7 +382,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ( state ) => {
 
-  //console.log( "Header State => ", state );
+  //LoggerManager.markLog( "6934933AA6D1", "Header State => ", state );
 
   return {
 

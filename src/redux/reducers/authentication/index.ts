@@ -14,7 +14,13 @@ import {
   _LOGOUT_SUCCESS,
   _RESET_ACTIVE_USER,
   _LOGOUT_FAILED,
-  _CHANGE_ACCOUNT
+  _CHANGE_ACCOUNT,
+  _USER_SIGNUP_GOOGLE_SUCCESS,
+  _USER_SIGNUP_GOOGLE_FAILED,
+  _USER_SIGNUP_FACEBOOK_SUCCESS,
+  _USER_SIGNUP_FACEBOOK_FAILED,
+  _USER_SIGNUP_INSTAGRAM_SUCCESS,
+  _USER_SIGNUP_INSTAGRAM_FAILED,
 } from "../../constants";
 import SystemUtils from "../../../utils/systemUtils";
 
@@ -66,7 +72,7 @@ function reducer( state = initialState.authentication, action: any ) {
       }
       catch ( error ) {
 
-        console.log( error );
+        LoggerManager.markError( "181235CDD950", error );
         result = state;
 
       }
@@ -86,7 +92,7 @@ function reducer( state = initialState.authentication, action: any ) {
       }
       catch ( error ) {
 
-        console.log( error );
+        LoggerManager.markLog( "35F6A3E88341", error );
         result = state;
 
       }
@@ -229,6 +235,56 @@ function reducer( state = initialState.authentication, action: any ) {
         };
 
         localStorage.setItem( "_ACCOUNTS_DATA", JSON.stringify( AccountsData ) );
+
+      }
+      catch ( error ) {
+
+        result = cloneDeep( state );
+
+        if ( !result.results ) {
+
+          result.results = {};
+
+        }
+
+        result.results[ action.payload.transactionId ] = {
+
+          actionType: _ERROR_IN_REDUCER,
+          mark: SystemUtils.getUUIDv4(),
+          data: error
+
+        };
+
+      }
+
+      break;
+
+    }
+
+    case _USER_SIGNUP_GOOGLE_SUCCESS:
+    case _USER_SIGNUP_GOOGLE_FAILED:
+    case _USER_SIGNUP_FACEBOOK_SUCCESS:
+    case _USER_SIGNUP_FACEBOOK_FAILED:
+    case _USER_SIGNUP_INSTAGRAM_SUCCESS:
+    case _USER_SIGNUP_INSTAGRAM_FAILED: {
+
+      try {
+
+        result = cloneDeep( state );
+
+        if ( !result.results ) {
+
+          result.results = {};
+
+        }
+
+        result.results[ action.payload.transactionId ] = {
+
+          actionType: action.type,
+          mark: SystemUtils.getUUIDv4(),
+          data: action.payload.response
+
+        };
 
       }
       catch ( error ) {

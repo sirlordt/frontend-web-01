@@ -75,7 +75,7 @@ class LoginModal extends Component {
 
   componentDidMount() {
 
-    //console.log( "componentDidMount => ", this.inputUsername );
+    //LoggerManager.markLog( "43496B0574CC", "componentDidMount => ", this.inputUsername );
 
     setTimeout( () => {
 
@@ -139,7 +139,7 @@ class LoginModal extends Component {
     const bFieldUsernameIsValid = !!( this.state.username && this.state.username.trim() !== "" );
     const bFieldPasswordIsValid = !!( this.state.password && this.state.password.trim() !== "" );
 
-    //console.log( bFieldUsernameIsValid );
+    //LoggerManager.markLog( "FFB5BBDAC9BF", bFieldUsernameIsValid );
 
     if ( bFieldUsernameIsValid &&
          bFieldPasswordIsValid ) {
@@ -194,8 +194,9 @@ class LoginModal extends Component {
 
   render() {
 
-    //console.log( "Username is valid => ", this.state.fieldUsernameIsValid );
-    //console.log( "Password is valid => ", this.state.fieldPasswordIsValid );
+    //LoggerManager.mark( "C2411110ECB6" );
+    //LoggerManager.debug( "Username is valid => ", this.state.fieldUsernameIsValid );
+    //LoggerManager.debug( "Password is valid => ", this.state.fieldPasswordIsValid );
 
     let result = null;
 
@@ -382,7 +383,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ( state ) => {
 
-  //console.log( "LoginModal State => ", state );
+  //LoggerManager.markLog( "C30348B82EE1", "LoginModal State => ", state );
 
   return {
     authentication: state.authentication,

@@ -8,6 +8,7 @@ import {
 import moment from "moment-timezone";
 //import moment from "moment";
 import CommonUtilities from "./commonUtilities";
+import LoggerManager from "./loggerManager";
 
 //const debug = require( "debug" )( "SystemUtilities" );
 
@@ -153,7 +154,7 @@ class SystemUtils {
     }
     catch ( error ) {
 
-      console.log( error );
+      LoggerManager.markLog( "F25D27F3DC4C",  error );
 
     }
 

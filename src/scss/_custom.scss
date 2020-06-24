@@ -376,113 +376,11 @@ label {
 
 }
 
+.margin-bottom-0-2-rem {
 
-/*
-.ScrollbarsCustom:hover .ScrollbarsCustom-Track.Scrollbars-Track-Vertical-Custom {
-
-  background: gray !important;
-  opacity: .4 !important;
+  margin-bottom: 0.2rem;
 
 }
-*/
-
-/*
-.scrollbar {
-
-  border-radius: 3px;
-
-}
-
-.scrollarea .scrollbar-container {
-
-  opacity: .6 !important;
-  border-radius: 5px;
-
-}
-
-.scrollarea .scrollbar-container.vertical {
-
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  //height: 98% !important;
-
-}
-
-.scrollarea .scrollbar-container.vertical:after {
-
-  padding-top: 2px !important;
-
-}
-
-.scrollarea:hover .scrollbar-container {
-
-  background: gray;
-  opacity: .6 !important;
-
-}
-*/
-
-
-/*
-.scrollarea .scrollbar-container:hover {
-  background: gray;
-  opacity: .6 !important;
-}
-.scrollarea .scrollbar-container.active {
-  background: gray;
-  opacity: .6 !important;
-}
-.scrollarea:hover .scrollbar-container {
-  opacity: .3;
-}
-*/
-
-/*
-.scrollbar:hover {
-
-  background: $gray-500__lt !important;
-
-}
-
-.scrollarea .scrollbar-container {
-
-  background: $gray-500__lt !important;
-  border-radius: 5px !important;
-  opacity: .6 !important;
-
-}
-
-.scrollarea .scrollbar-container:hover {
-
-  background: $gray-700__lt !important;
-  //opacity: .7 !important;
-
-}
-
-.scrollarea:hover .scrollbar-container {
-
-  opacity: .8 !important;
-
-}
-*/
-
-/*
-.c-dark-theme .scrollbar-container:hover {
-
-  background: red !important;
-  opacity: 1 !important;
-  //border-radius: 3px;
-
-}
-
-.c-dark-theme .scrollbar {
-
-  background: $gray-400__lt !important;
-  //border-radius: 3px;
-
-}
-*/
-
 
 button.close {
 
@@ -501,6 +399,15 @@ button.close:hover {
   display: inherit !important;
   flex-direction: inherit !important;
   min-height: inherit !important;
+
+}
+
+.intagram-button {
+
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%) !important;
+  border: 0 !important;
+  width: 40px;
+  height: 35px;
 
 }
 

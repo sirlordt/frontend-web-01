@@ -287,7 +287,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ( state ) => {
 
-  //console.log( "Left Side State => ", state );
+  //LoggerManager.markLog( "536E42D47948", "Left Side State => ", state );
 
   return {
 

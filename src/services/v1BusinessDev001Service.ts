@@ -8,13 +8,13 @@ import LoggerManager from "../utils/loggerManager";
 class V1BusinessDev001Service {
 
   static async callGetEstablishment( backend: any,
-                                     headers: any,
-                                     logger: any ): Promise<{ input: any, output: any } | Error> {
+                                     headers: any ): Promise<{ input: any, output: any, error: Error }> {
 
     let result: any = {
 
       input: null,
-      output: null
+      output: null,
+      error: null
 
     };
 
@@ -60,7 +60,7 @@ class V1BusinessDev001Service {
 
       LoggerManager.markError( "BD0F35A8BC74", error );
 
-      result = error;
+      result.error = error;
 
       /*
       const strMark = "A71C4DB721ED";
@@ -86,12 +86,13 @@ class V1BusinessDev001Service {
 
   static async callStartUpdateTipJob( backend: any,
                                       headers: any,
-                                      body: any ): Promise<{ input: any, output: any } | Error> {
+                                      body: any ): Promise<{ input: any, output: any, error: Error }> {
 
     let result: any = {
 
       input: null,
-      output: null
+      output: null,
+      error: null
 
     };
 
@@ -138,7 +139,7 @@ class V1BusinessDev001Service {
 
       LoggerManager.markError( "07CAA3973707", error );
 
-      result = error;
+      result.error = error;
 
       /*
       const strMark = "A71C4DB721ED";
@@ -165,12 +166,13 @@ class V1BusinessDev001Service {
 
   static async callGetUpdateTipJobStatus( backend: any,
                                           headers: any,
-                                          queryParams: any ): Promise<{ input: any, output: any } | Error> {
+                                          queryParams: any ): Promise<{ input: any, output: any, error: Error }> {
 
     let result: any = {
 
       input: null,
-      output: null
+      output: null,
+      error: null
 
     };
 
@@ -216,7 +218,7 @@ class V1BusinessDev001Service {
 
       LoggerManager.markError( "A9B609B9575C", error );
 
-      result = error;
+      result.error = error;
 
       /*
       const strMark = "6328B772B17E";

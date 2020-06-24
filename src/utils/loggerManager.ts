@@ -117,7 +117,7 @@ export default class LoggerManager {
 
   }
 
-  static log( intLevel: number, strMark: string, dataToLog: any ) {
+  static commonLog( intLevel: number, strMark: string, dataToLog: any ) {
 
     if ( intLevel <= LoggerManager.level &&
          process.env.REACT_APP_LOG_TO ) {
@@ -406,27 +406,39 @@ export default class LoggerManager {
 
   }
 
+  static log( dataToLog: any ) {
+
+    this.markDebug( this.strLastMark, dataToLog );
+
+  }
+
   static markError( strMark: string, dataToLog: any ) {
 
-    LoggerManager.log( LoggerManager.ERROR(), strMark, dataToLog );
+    LoggerManager.commonLog( LoggerManager.ERROR(), strMark, dataToLog );
 
   }
 
   static markWarn( strMark: string, dataToLog: any ) {
 
-    LoggerManager.log( LoggerManager.WARN(), strMark, dataToLog );
+    LoggerManager.commonLog( LoggerManager.WARN(), strMark, dataToLog );
 
   }
 
   static markInfo( strMark: string, dataToLog: any ) {
 
-    LoggerManager.log( LoggerManager.INFO(), strMark, dataToLog );
+    LoggerManager.commonLog( LoggerManager.INFO(), strMark, dataToLog );
 
   }
 
   static markDebug( strMark: string, dataToLog: any ) {
 
-    LoggerManager.log( LoggerManager.DEBUG(), strMark, dataToLog );
+    LoggerManager.commonLog( LoggerManager.DEBUG(), strMark, dataToLog );
+
+  }
+
+  static markLog( strMark: string, dataToLog: any ) {
+
+    LoggerManager.commonLog( LoggerManager.DEBUG(), strMark, dataToLog );
 
   }
 

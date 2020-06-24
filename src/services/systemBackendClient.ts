@@ -3,6 +3,7 @@ import mainStore from "../redux/store";
 import V1SystemSecurityAuthenticationService from "./v1SystemSecurityAuthenticationService";
 import V1SystemUserService from "./v1SystemUserService";
 import V1SystemBinaryService from "./v1SystemBinaryService";
+import LoggerManager from "../utils/loggerManager";
 
 class SystemBackendClient {
 
@@ -19,7 +20,7 @@ class SystemBackendClient {
 
   static getBackendConfig(): any {
 
-    //console.log( mainStore.getState().backend.active );
+    //LoggerManager.markLog( "D47C71F7B017",  mainStore.getState().backend.active );
 
     let result = null;
 
@@ -32,7 +33,7 @@ class SystemBackendClient {
     }
     catch ( error ) {
 
-      console.log( error );
+      LoggerManager.markError( "B1D99B04B796",  error );
 
     }
 
@@ -74,6 +75,89 @@ class SystemBackendClient {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "44E5E97C2AA6", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callLoginGoogle( loginData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemSecurityAuthenticationService.callLoginGoogle( backendConfig,
+                                                                            headersConfig,
+                                                                            loginData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "69826B7C5217", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callLoginFacebook( loginData: string ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemSecurityAuthenticationService.callLoginFacebook( backendConfig,
+                                                                              headersConfig,
+                                                                              loginData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "5A29E0EC2A65", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callLoginInstagram( loginData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemSecurityAuthenticationService.callLoginInstagram( backendConfig,
+                                                                               headersConfig,
+                                                                               loginData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "3889D844CBAF", error );
+
       result = error;
 
     }
@@ -99,6 +183,8 @@ class SystemBackendClient {
 
     }
     catch ( error ) {
+
+      LoggerManager.markError( "C5732519B4DF", error );
 
       result = error;
 
@@ -126,6 +212,8 @@ class SystemBackendClient {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "607C2C4821E0", error );
+
       result = error;
 
     }
@@ -152,6 +240,8 @@ class SystemBackendClient {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "6BAF6DA5B6F1", error );
+
       result = error;
 
     }
@@ -175,7 +265,7 @@ class SystemBackendClient {
       result = await V1SystemBinaryService.callCreateAuth( backendConfig,
                                                            headersConfig );
 
-      if ( result instanceof Error === false ) {
+      if ( !result.error ) {
 
         if ( result?.output?.body?.Data[ 0 ].Auth ) {
 
@@ -186,12 +276,14 @@ class SystemBackendClient {
       }
       else {
 
-        console.log( result );
+        LoggerManager.markLog( "247E6AAEB1C7",  result.error );
 
       }
 
     }
     catch ( error ) {
+
+      LoggerManager.markError( "6A7885B1C15A", error );
 
       result = error;
 
@@ -235,8 +327,8 @@ class SystemBackendClient {
                                                                  binaryRequest,
                                                                  uploadCallBack ); //This request must be fail
 
-      //console.log( result );
-      if ( result instanceof Error === false ) {
+      //LoggerManager.markLog( "767DC6F5D5A5", result );
+      if ( !result.error ) {
 
         if ( result.output.body.Code === "SUCCESS_BINARY_DATA_UPLOAD" &&
              result.output.body.Data ) {
@@ -269,8 +361,144 @@ class SystemBackendClient {
     }
     catch ( error ) {
 
+      LoggerManager.markError( "A44ED3F68824", error );
+
       result = error;
-      //CommonTest.consoleLog( "Error", error );
+
+    }
+
+    return result;
+
+  }
+
+  static async callUserSignup( signupData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemUserService.callUserSignup( backendConfig,
+                                                         headersConfig,
+                                                         signupData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "DB82C0D8F403", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callUserSignupActivate( signupData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemUserService.callUserSignupActivate( backendConfig,
+                                                                 headersConfig,
+                                                                 signupData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "E710B4E4506E", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callUserSignupGoogle( signupData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemUserService.callUserSignupGoogle( backendConfig,
+                                                               headersConfig,
+                                                               signupData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "B2FCDC0A7908", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callUserSignupFacebook( signupData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemUserService.callUserSignupFacebook( backendConfig,
+                                                                 headersConfig,
+                                                                 signupData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "D14CB06EE79F", error );
+
+      result = error;
+
+    }
+
+    return result;
+
+  }
+
+  static async callUserSignupInstagram( signupData: any ): Promise<any> {
+
+    let result = null;
+
+    try {
+
+      const backendConfig = SystemBackendClient.getBackendConfig();
+
+      const headersConfig = SystemBackendClient.getHeadersConfig();
+
+      result = await V1SystemUserService.callUserSignupInstagram( backendConfig,
+                                                                  headersConfig,
+                                                                  signupData );
+
+    }
+    catch ( error ) {
+
+      LoggerManager.markError( "6E90D4C266E1", error );
+
+      result = error;
 
     }
 
