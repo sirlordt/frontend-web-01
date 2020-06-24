@@ -1,11 +1,13 @@
 //import mainStore from "../redux/store";
 
 import SystemBackendClient from './systemBackendClient'
-import V1BusinessDev001Service from "./v1BusinessDev001Service";
 import LoggerManager from "../utils/loggerManager";
+
+//import V1BusinessDev001Service from "./v1BusinessDev001Service";
 
 class BusinessBackendClient {
 
+  /*
   static async callGetEstablishment( strAutorization: string ): Promise<any> {
 
     let result = null;
@@ -129,6 +131,7 @@ class BusinessBackendClient {
     return result;
 
   }
+  */
 
 }
 

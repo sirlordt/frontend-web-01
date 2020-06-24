@@ -45,6 +45,7 @@ const navigationEntries: any = [
 
     entries: [
 
+      /*
       {
 
         key: "D08FB8",
@@ -59,6 +60,7 @@ const navigationEntries: any = [
         icon: [ "far", "edit" ],
 
       },
+      */
 
       {
 
