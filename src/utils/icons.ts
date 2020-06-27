@@ -30,7 +30,8 @@ import {
   faPencilAlt,
   faAt,
   faPhone,
-  faCode
+  faCode,
+  faShoePrints
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -79,4 +80,5 @@ library.add( faCheckSquare,
              faAt,
              faUserPlus,
              faPhone,
-             faCode );
+             faCode,
+             faShoePrints );

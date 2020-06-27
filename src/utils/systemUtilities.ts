@@ -1,9 +1,11 @@
+import moment from "moment-timezone";
 
 import Validator from 'validatorjs';
 
 import CommonUtilities from './commonUtilities';
 
 import LoggerManager from "./loggerManager";
+import CommonConstants from "./commonConstants";
 
 class SystemUtilities {
 
@@ -103,6 +105,102 @@ class SystemUtilities {
     catch ( error ) {
 
       LoggerManager.markError( "CB2C0D02B1D0", error );
+
+    }
+
+    return result;
+
+  }
+
+  static getCurrentDateAndTime(): any {
+
+    let result = null;
+
+    try {
+
+      result = moment().tz( CommonUtilities.getCurrentTimeZoneId() );
+
+    }
+    catch ( error ) {
+
+
+    }
+
+    return result;
+
+  }
+
+  static getCurrentDateAndTimeFrom( at: any ): any {
+
+    let result = null;
+
+    try {
+
+      if ( at ) {
+
+        if ( moment( at ).isValid() ) {
+
+          result = moment( at ).tz( CommonUtilities.getCurrentTimeZoneId() );
+
+        }
+
+      }
+
+    }
+    catch ( error ) {
+
+
+    }
+
+    return result;
+
+  }
+
+  static getCurrentDateFrom( at: any ): any {
+
+    let result = null;
+
+    try {
+
+      if ( at ) {
+
+        if ( moment( at ).isValid() ) {
+
+          result = moment( at ).tz( CommonUtilities.getCurrentTimeZoneId() ).format( CommonConstants._DATE_LONG_FORMAT_01 );
+
+        }
+
+      }
+
+    }
+    catch ( error ) {
+
+
+    }
+
+    return result;
+
+  }
+
+  static getCurrentTimeFrom( at: any ): any {
+
+    let result = null;
+
+    try {
+
+      if ( at ) {
+
+        if ( moment( at ).isValid() ) {
+
+          result = moment( at ).tz( CommonUtilities.getCurrentTimeZoneId() ).format( CommonConstants._TIME_24_LONG_FORMAT_01 );
+
+        }
+
+      }
+
+    }
+    catch ( error ) {
+
 
     }
 

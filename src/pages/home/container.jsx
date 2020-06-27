@@ -39,6 +39,7 @@ import {
 import SystemUtils from "../../utils/systemUtils";
 
 import Content from "../content";
+import SystemBackendClient from "../../services/systemBackendClient";
 
 const Header = React.lazy( () => import( "../../components/header" ) );
 const Footer = React.lazy( () => import( "../../components/footer" ) );
@@ -192,10 +193,14 @@ class HomePage extends Component {
 
       const strAuthorization = this.props.authentication.active && this.props.authentication.accounts ? this.props.authentication.accounts[ this.props.authentication.active ].Authorization : null;
 
+      //Force to preload of sync way the actions entries from remote service
+      const responseActions = await SystemBackendClient.callUserActions( strAuthorization );
+
       this.props.getUserActions( {
 
         transactionId: this.state.id,
-        authorization: strAuthorization
+        authorization: strAuthorization,
+        responseActions: responseActions,
 
       } );
 

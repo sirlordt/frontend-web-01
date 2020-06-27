@@ -45,22 +45,36 @@ const navigationEntries: any = [
 
     entries: [
 
-      /*
       {
 
         key: "D08FB8",
         kind: "action",
-        to: "/home/update/tips/uber",
-        label: i18n.t( "Update Tips Uber" ),
+        to: "/home/odinv1/order/tip/uber/update",
+        label: i18n.t( "Order tip Uber update" ),
         backendActions: [
-                          "v1.business.dev001.odin.establishment",
-                          "v1.business.dev001.odin.order.tip.uber.job",
-                          "v1.business.dev001.odin.order.tip.uber.output"
+                          "v1.business.dev001.odinv1.establishment",
+                          "v1.business.dev001.odinv1.order.tip.uber.job",
+                          "v1.business.dev001.odinv1.order.tip.uber.status"
                         ],
         icon: [ "far", "edit" ],
 
       },
-      */
+
+      {
+
+        key: "D7FF07",
+        kind: "action",
+        to: "/home/odinv1/bulk/order/create",
+        label: i18n.t( "Bulk order create" ),
+        backendActions: [
+                          "v1.business.dev001.odinv1.establishment",
+                          "v1.business.dev001.odinv1.establishment",
+                          "v1.business.dev001.odinv1.order.tip.uber.job",
+                          "v1.business.dev001.odinv1.order.tip.uber.status"
+                        ],
+        icon: [ "far", "edit" ],
+
+      },
 
       {
 

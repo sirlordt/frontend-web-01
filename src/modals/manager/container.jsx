@@ -29,6 +29,8 @@ import {
 
 import MessageModal from "../message";
 
+import MessageModalMemo from "../memo";
+
 import ChangeLanguageModal from "../changeLanguage";
 import ChangeBackendServerModal from "../changeBackendServer";
 import ChangeAccountModal from "../changeAccount";
@@ -166,7 +168,48 @@ class ModalManager extends Component {
 
       if ( modalInfo.title && modalInfo.message ) {
 
-        if ( modalInfo.code === "NOTIFICATION_MODAL" ) {
+        if ( modalInfo.code === "NOTIFICATION_MODAL_MEMO" ) {
+
+          const buttons = (
+
+            <CButton
+              className="ml-2 box-shadow-none"
+              color="primary"
+              onClick={ ( event ) => {
+
+                event.modalId = modalInfo.id;
+                event.modalCallback = modalInfo.callback;
+                this.onClickButtonCloseModal( event );
+
+              } }
+            >
+
+              <FontAwesomeIcon icon="times" />
+
+              <span className="ml-2">
+
+                <Trans i18nKey="Close" />
+
+              </span>
+
+            </CButton>
+
+          );
+
+          result.push(
+
+            <MessageModalMemo
+              showMe={ modalInfo.showMe }
+              key={ modalInfo.id }
+              title={ modalInfo.title }
+              message={ modalInfo.message }
+              buttons={ buttons }
+            />
+
+          );
+
+        }
+        else if ( modalInfo.code === "NOTIFICATION_MODAL" ) {
 
           const buttons = (
 

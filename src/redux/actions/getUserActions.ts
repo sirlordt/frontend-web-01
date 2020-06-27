@@ -8,7 +8,7 @@ function getUserActions( payload: any ): any {
 
   return async ( dispatch: any ) => {
 
-    const result = await backendClient.callUserActions( payload.authorization );
+    const result = payload.responseActions ? payload.responseActions: await backendClient.callUserActions( payload.authorization );
 
     if ( result instanceof Error ) {
 
