@@ -3,7 +3,7 @@ import axios from "axios";
 //import CommonUtilities from "../utils/commonUtilities";
 import LoggerManager from "../utils/loggerManager";
 
-import mainStore from '../redux/store'
+import mainStore from '../redux/store';
 
 //const debug = require( "debug" )( "V1BusinessDev001Service" );
 
@@ -29,18 +29,21 @@ class V1BusinessDev001Service {
         headers,
         params: params,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
       //LoggerManager.markLog( "0B06990B0362", mainStore.getState().frontend.userActions );
 
-      //let strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/establishment";
-      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.establishment" ];
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.establishment" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/establishment";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -96,16 +99,19 @@ class V1BusinessDev001Service {
         headers,
         params: params,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      //let strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/driver";
-      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.driver" ];
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.driver" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/driver";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -160,16 +166,19 @@ class V1BusinessDev001Service {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.tip.uber.job" ];
+
       //const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/order/tip/uber";
-      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.tip.uber.job" ];
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -223,16 +232,19 @@ class V1BusinessDev001Service {
         method: "GET",
         headers,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.tip.uber.status" ] + `?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
+
       //const strRequestURL = backend.url[ 0 ] + `/v1/business/dev001/odinv1/order/tip/uber?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
-      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.tip.uber.status" ] + `?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -287,16 +299,19 @@ class V1BusinessDev001Service {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/order/bulk";
       const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.bulk.job" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/business/dev001/odinv1/order/bulk";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -350,16 +365,19 @@ class V1BusinessDev001Service {
         method: "GET",
         headers,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      //const strRequestURL = backend.url[ 0 ] + `/v1/business/dev001/odinv1/order/bulk?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
       const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.business.dev001.odinv1.order.bulk.status" ] + `?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
+
+      //const strRequestURL = backend.url[ 0 ] + `/v1/business/dev001/odinv1/order/bulk?Id=${queryParams.Id}&Kind=${queryParams.Kind}`;
 
       const callResult = await axios( strRequestURL,
                                       options );

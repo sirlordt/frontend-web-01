@@ -102,11 +102,13 @@ class MessageModalMemo extends Component {
         <ModalBody>
 
         <CTextarea
+          style={ { whiteSpace: "nowrap" } }
           name="textarea-input"
           id="textarea-input"
           rows="9"
           placeholder="Content..."
           value={ this.props.message }
+          onChange={ () => {} }
         />
 
         </ModalBody>

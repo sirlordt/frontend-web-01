@@ -4,6 +4,7 @@ import axios from "axios";
 import LoggerManager from "../utils/loggerManager";
 
 //const debug = require( "debug" )( "V1SystemSecurityAuthenticationService" );
+import mainStore from '../redux/store'
 
 class V1SystemSecurityAuthenticationService {
 
@@ -43,7 +44,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login";
+      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -73,22 +76,6 @@ class V1SystemSecurityAuthenticationService {
       LoggerManager.markError( "E9DEC6366C36", error );
 
       result.error = error;
-
-      /*
-      const strMark = "1DFC6EF03869";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
 
     }
 
@@ -132,7 +119,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/google";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.google" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/google";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -162,22 +151,6 @@ class V1SystemSecurityAuthenticationService {
       LoggerManager.markError( "23B7E01BA381", error );
 
       result.error = error;
-
-      /*
-      const strMark = "1DFC6EF03869";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
 
     }
 
@@ -221,7 +194,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/facebook";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.facebook" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/facebook";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -251,22 +226,6 @@ class V1SystemSecurityAuthenticationService {
       LoggerManager.markError( "A09026F1CA3F", error );
 
       result.error = error;
-
-      /*
-      const strMark = "1DFC6EF03869";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
 
     }
 
@@ -310,7 +269,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/instagram";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.instagram" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/instagram";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -341,22 +302,6 @@ class V1SystemSecurityAuthenticationService {
 
       result.error = error;
 
-      /*
-      const strMark = "1DFC6EF03869";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
-
     }
 
     return result;
@@ -382,15 +327,19 @@ class V1SystemSecurityAuthenticationService {
         headers,
         data: null,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/token/check";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.token.check" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/token/check";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -416,22 +365,6 @@ class V1SystemSecurityAuthenticationService {
       LoggerManager.markError( "9CFE42581FB6", error );
 
       result.error = error;
-
-      /*
-      const strMark = "DD5EBFB4BDEE";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
 
     }
 
@@ -466,7 +399,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/logout";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.logout" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/logout";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -492,22 +427,6 @@ class V1SystemSecurityAuthenticationService {
       LoggerManager.markError( "07EC8794C71A", error );
 
       result.error = error;
-
-      /*
-      const strMark = "88DD50269849";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-      */
 
     }
 

@@ -30,7 +30,8 @@ import {
   CInputGroupText,
   CRow,
   //CTextarea,
-  CProgress
+  CProgress,
+  CInputCheckbox
   //CInputGroupAppend
 } from "@coreui/react";
 
@@ -101,6 +102,8 @@ class BulkOrderCreateView extends Component {
       fieldFileToUploadLabel: "Choose your local computer file",
       fieldFileToUploadMessage: "",
       fieldFileToUploadValue: "",
+
+      fieldSimulateValue: "1",
 
       uploadProgressMessage: "",
       uploadProgress: 0,
@@ -313,8 +316,7 @@ class BulkOrderCreateView extends Component {
                                                                                           {
                                                                                             Id: strJobId ? strJobId: this.state.jobId,
                                                                                             Kind: "status"
-                                                                                          },
-                                                                                          null );
+                                                                                          } );
 
       //LoggerManager.markLog( "A90FD41D96E9", statusResponse );
 
@@ -322,16 +324,20 @@ class BulkOrderCreateView extends Component {
 
         if ( statusResponse.Total !== -1 ) {
 
+          let bJobFinished = statusResponse.Phase === "finished" ||
+                             statusResponse.Kind === "error_and_stop" ||
+                             statusResponse.Progress === statusResponse.Total;
+
           this.setState( {
 
             processStatusMessage: statusResponse.Message,
             processStatusProgress: statusResponse.Total > 0 ? Math.round( ( statusResponse.Progress * 100 ) / statusResponse.Total ) : 0,
-            buttonProcessDisabled: !( statusResponse.Kind === "error_and_stop" || statusResponse.Total === statusResponse.Progress )
+            buttonProcessDisabled: !bJobFinished,
+            buttonViewOutputDisabled: !bJobFinished
 
           } );
 
-          if ( statusResponse.Kind === "error_and_stop" ||
-               statusResponse.Progress === statusResponse.Total ) {
+          if ( bJobFinished ) {
 
             bulkOrderCreate[ strCurrentDate ].Status = {
 
@@ -473,6 +479,24 @@ class BulkOrderCreateView extends Component {
 
   };
 
+  onChangeCheckBox = ( event ) => {
+
+    if ( event.target.name === "Simulate" ) {
+
+      //LoggerManager.markLog( "C55988B0F010", event.target.name );
+      //LoggerManager.markLog( "C55988B0F010", event.target.value === "1" ? "0": "1" );
+      //LoggerManager.markLog( "1B16CAEA57A6", this.state.fieldSimulateValue );
+
+      this.setState( {
+
+        [ "field" + event.target.name + "Value" ]: event.target.value === "1" ? "0": "1"
+
+      } );
+
+    }
+
+  }
+
   onChangefieldFileToUpload = ( event ) => {
 
     this.setState( {
@@ -560,7 +584,8 @@ class BulkOrderCreateView extends Component {
         uploadProgress: 0,
         processStatusMessage: "",
         processStatusProgress: 0,
-        buttonProcessDisabled: true
+        buttonProcessDisabled: true,
+        buttonViewOutputDisabled: true
 
       } );
 
@@ -569,31 +594,31 @@ class BulkOrderCreateView extends Component {
         try {
 
           const uploadResponse = await SystemBackendClient.callUploadFile( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                            this.state.fieldFileToUploadValue,
-                                                                            this.uploadCallback,
-                                                                            null );
+                                                                           this.state.fieldFileToUploadValue,
+                                                                           this.uploadCallback );
+
+          const data = {
+
+            Id: uploadResponse.Id,
+            Simulate: this.state.fieldSimulateValue === "1" ? 1 : 0,
+
+            EstablishmentId: this.state.fieldEstablishmentValue,
+            DriverId: this.state.fieldDriverValue + "1",
+            CreatedAt: this.state.fieldDateValue + " " + this.state.fieldTimeValue,
+            Path: uploadResponse.Path,
+            FileName: this.state.fieldFileToUploadLabel, //uploadResponse.FileName,
+            CheckAddressAndCustomer: 1,
+            Backend: process.env.REACT_APP_REACT_SCRIPT === 'production01' ? process.env.REACT_APP_PROD01_ODINV1_PATH: process.env.REACT_APP_TEST01_ODINV1_PATH
+
+          };
 
           const strJobId = await BusinessBackendClient.callStartBulkOrderCreateJob( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
-                                                                                    {
-
-                                                                                      Id: uploadResponse.Id,
-                                                                                      Simulate: 0,
-
-                                                                                      EstablishmentId: this.state.fieldEstablishmentValue,
-                                                                                      DriverId: this.state.fieldDriverValue + "1",
-                                                                                      CreatedAt: this.state.fieldDateValue + " " + this.state.fieldTimeValue,
-                                                                                      Path: uploadResponse.Path,
-                                                                                      FileName: this.state.fieldFileToUploadLabel, //uploadResponse.FileName,
-                                                                                      CheckAddressAndCustomer: 1,
-                                                                                      Backend: "http://test01.weknock-tech.com"
-
-                                                                                    },
-                                                                                    null );
+                                                                                    data );
 
           this.setState( () => ( {
 
             //uploadProgressMessage: `${t( "Uploading file" )}...`,
-            buttonProcessDisabled: true,
+            //buttonProcessDisabled: true,
             jobId: strJobId
 
           } ) );
@@ -621,8 +646,7 @@ class BulkOrderCreateView extends Component {
                                                                                         {
                                                                                           Id: this.state.jobId,
                                                                                           Kind: "output"
-                                                                                        },
-                                                                                        null );
+                                                                                        } );
 
     if ( statusResponse instanceof Error === false &&
          !statusResponse.error ) {
@@ -662,6 +686,8 @@ class BulkOrderCreateView extends Component {
     //const t = this.props.t; //Translate functions injected by withTranslation function
     //<CContainer style={ { "height": innerHeight - 212, "overflowY": "auto" } }>
     //<div style={ { flex: 1, overflow: "auto", background: "pink" } }>
+
+    //LoggerManager.markLog( "949D829E981E", this.state.fieldSimulateValue );
 
     return (
 
@@ -720,7 +746,7 @@ class BulkOrderCreateView extends Component {
 
                         {
 
-                          this.state.establishments.map( ( establishmentInfo ) => {
+                          this.state.establishments && this.state.establishments.map( ( establishmentInfo ) => {
 
                             return (
 
@@ -967,6 +993,25 @@ class BulkOrderCreateView extends Component {
                       ) : null
 
                     }
+
+                  </CFormGroup>
+
+                  <CFormGroup className="mb-4" variant="custom-checkbox">
+
+                    <CInputCheckbox
+                      custom
+                      id="Simulate"
+                      name="Simulate"
+                      defaultChecked={ this.state.fieldSimulateValue }
+                      value={ this.state.fieldSimulateValue }
+                      onChange={ this.onChangeCheckBox }
+                    />
+
+                    <CLabel variant="custom-checkbox" htmlFor="Simulate">
+
+                      <Trans i18nKey={ "Simulate?. (Useful to test validity of uploaded file)" } />
+
+                    </CLabel>
 
                   </CFormGroup>
 

@@ -90,26 +90,6 @@ class RootPage extends Component {
 
     }
 
-    /*
-    try {
-
-      const strAuthorization = this.props.authentication.active && this.props.authentication.accounts ? this.props.authentication.accounts[ this.props.authentication.active ].Authorization : null;
-
-      this.props.getUserActions( {
-
-        transactionId: this.state.id,
-        authorization: strAuthorization
-
-      } );
-
-    }
-    catch ( error ) {
-
-      //
-
-    }
-    */
-
   }
 
   componentDidUpdate() {

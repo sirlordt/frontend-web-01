@@ -157,8 +157,7 @@ class OrderTipUberUpdateView extends Component {
                                                                                              {
                                                                                                Id: strJobId ? strJobId: this.state.jobId,
                                                                                                Kind: "status"
-                                                                                             },
-                                                                                             null );
+                                                                                             } );
 
       //LoggerManager.markLog( "A90FD41D96E9", statusResponse );
 
@@ -365,8 +364,7 @@ class OrderTipUberUpdateView extends Component {
 
             const uploadResponse = await SystemBackendClient.callUploadFile( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
                                                                             this.state.fieldFileToUploadValue,
-                                                                            this.uploadCallback,
-                                                                            null );
+                                                                            this.uploadCallback );
 
             const jobId = await BusinessBackendClient.callStartOrderTipUberUpdateJob( this.props.authentication.accounts[ this.props.authentication.active ].Authorization,
                                                                                       {
@@ -375,8 +373,7 @@ class OrderTipUberUpdateView extends Component {
                                                                                         EstablishmentId: this.state.fieldEstablishmentValue,
                                                                                         Path: uploadResponse.Path,
                                                                                         FileName: uploadResponse.FileName,
-                                                                                      },
-                                                                                      null );
+                                                                                      } );
 
             this.setState( () => ( {
 

@@ -40,6 +40,7 @@ import SystemUtils from "../../utils/systemUtils";
 
 import Content from "../content";
 import SystemBackendClient from "../../services/systemBackendClient";
+import LoggerManager from "../../utils/loggerManager";
 
 const Header = React.lazy( () => import( "../../components/header" ) );
 const Footer = React.lazy( () => import( "../../components/footer" ) );
@@ -72,12 +73,15 @@ class HomePage extends Component {
 
   }
 
-  shouldComponentUpdate( nextProps ) {
+  async shouldComponentUpdate( nextProps ) {
 
     if ( this.props.authentication.results[ this.state.id ]?.mark !== nextProps.authentication.results[ this.state.id ]?.mark ) {
 
       const strCode = nextProps.authentication.results[ this.state.id ].data.Code;
       const strMessage = nextProps.authentication.results[ this.state.id ].data.Message;
+
+      //LoggerManager.markLog( "98F48F27F3F6", "shouldComponentUpdate( " + strCode + ")" );
+      //LoggerManager.markLog( "EEABD4460609", this.props.frontend.userActions );
 
       if ( strCode === "NO_RESPONSE_FROM_SERVER" ) {
 
@@ -101,8 +105,32 @@ class HomePage extends Component {
 
         } );
 
+        if ( Object.keys( this.props.frontend.userActions ).length === 0 ) {
+
+          const strAuthorization = this.props.authentication.active && this.props.authentication.accounts ? this.props.authentication.accounts[ this.props.authentication.active ].Authorization : null;
+
+          //Force to preload of sync way the actions entries from remote service
+          const responseActions = await SystemBackendClient.callUserActions( strAuthorization );
+
+          this.props.getUserActions( {
+
+            transactionId: this.state.id,
+            authorization: strAuthorization,
+            responseActions: responseActions,
+
+          } );
+
+        };
+
       }
-      else {
+      /*
+      else if ( strCode === "SUCCESS_GET_ACTIONS" ) {
+
+
+
+      }
+      */
+      else if ( strCode !== "SUCCESS_GET_ACTIONS" ) {
 
         //ERROR_EXPIRED_AUTHORIZATION_TOKEN
         //ERROR_INVALID_AUTHORIZATION_TOKEN
@@ -314,8 +342,10 @@ const mapStateToProps = ( state ) => {
   //LoggerManager.markLog( "1A5E5B59F480", "Home State => ", state );
 
   return {
+
     authentication: state.authentication,
     frontend: state.frontend
+
   };
 
 };

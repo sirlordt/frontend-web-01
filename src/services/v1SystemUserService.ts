@@ -5,6 +5,8 @@ import LoggerManager from "../utils/loggerManager";
 
 //const debug = require( "debug" )( "V1SystemUserService" );
 
+import mainStore from '../redux/store';
+
 class V1SystemUserService {
 
   static async callUserActions( backend: any,
@@ -24,11 +26,13 @@ class V1SystemUserService {
         method: "GET",
         headers,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
@@ -95,7 +99,9 @@ class V1SystemUserService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.user.signup" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -150,15 +156,19 @@ class V1SystemUserService {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/activate";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.user.signup.activate" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/activate";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -213,15 +223,19 @@ class V1SystemUserService {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/google";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.user.signup.google" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/google";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -276,15 +290,19 @@ class V1SystemUserService {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/facebook";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.user.signup.facebook" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/facebook";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -339,15 +357,19 @@ class V1SystemUserService {
         headers,
         data: body,
 
+        /*
         validateStatus: () => {
 
           return true;
 
         }
+        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/instagram";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.user.signup.instagram" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/user/signup/instagram";
 
       const callResult = await axios( strRequestURL,
                                       options );

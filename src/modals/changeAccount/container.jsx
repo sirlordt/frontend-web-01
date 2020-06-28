@@ -268,8 +268,7 @@ class ChangeAccountModal extends Component {
       buttonChangeAccountLabel = "Login";
       buttonChangeAccountIcon = "sign-in-alt";
 
-      const result = await SystemBackendClient.callTokenCheck( this.props.authentication.accounts[ account ].Authorization,
-                                                         null );
+      const result = await SystemBackendClient.callTokenCheck( this.props.authentication.accounts[ account ].Authorization );
 
       if ( result instanceof Error === false ) {
 

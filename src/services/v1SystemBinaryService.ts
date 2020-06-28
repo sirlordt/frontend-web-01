@@ -5,6 +5,8 @@ import LoggerManager from "../utils/loggerManager";
 
 //const debug = require( "debug" )( "V1SystemBinaryService" );
 
+import mainStore from '../redux/store';
+
 class V1SystemBinaryService {
 
   static async callCreateAuth( backend: any,
@@ -27,7 +29,9 @@ class V1SystemBinaryService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary/auth";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.auth.create" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/binary/auth";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -53,24 +57,6 @@ class V1SystemBinaryService {
       LoggerManager.markError( "86AED92A79A1", error );
 
       result = error;
-
-      /*
-      const strMark = "1316C841F830";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-
-      result = error;
-      */
 
     }
 
@@ -107,7 +93,9 @@ class V1SystemBinaryService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary";
+      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.upload" ];
+
+      //const strRequestURL = backend.url[ 0 ] + "/v1/system/binary";
 
       const callResult = await axios.post( strRequestURL,
                                            body,
@@ -140,24 +128,6 @@ class V1SystemBinaryService {
       LoggerManager.markError( "4723E6E2E608", error );
 
       result.error = error;
-
-      /*
-      const strMark = "7534D72B3364";
-
-      const debugMark = debug.extend( strMark );
-
-      debugMark( "Error message: [%s]", error.message ? error.message : "No error message available" );
-
-      error.mark = strMark;
-
-      if ( logger && typeof logger.error === "function" ) {
-
-        logger.error( error );
-
-      }
-
-      result = error;
-      */
 
     }
 
