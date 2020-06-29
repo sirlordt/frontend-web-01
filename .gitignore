@@ -10,6 +10,8 @@
 
 # production
 /build
+/build-prod01
+/build-test01
 
 # misc
 .DS_Store
