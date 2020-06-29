@@ -534,7 +534,7 @@ class LoginPage extends Component {
 
                       </CFormGroup>
 
-                      <CFormGroup className="mb-2">
+                      <CFormGroup className="mb-4">
 
                         <CRow className="m-0">
 

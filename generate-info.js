@@ -14,7 +14,16 @@ fs.readFile( "src/info.json", function( error, content ) {
     const info = JSON.parse( content );
 
     info.reactScript = process.env.REACT_APP_REACT_SCRIPT;
-    info.release = moment().format();
+
+    let strPostfix = "-test01";
+
+    if ( process.env.REACT_APP_REACT_SCRIPT === "production01" ) {
+
+      strPostfix = "-prod01";
+
+    }
+
+    info.release = moment().format() + strPostfix;
 
     fs.writeFile( "src/info.json", JSON.stringify( info, null, 2 ), function( error ) {
 

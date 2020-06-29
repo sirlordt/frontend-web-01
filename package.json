@@ -2,6 +2,7 @@
   "name": "frontend-web-01",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@bugsnag/js": "^7.1.1",
     "@bugsnag/plugin-react": "^7.1.1",
@@ -100,8 +101,8 @@
   },
   "scripts": {
     "start": "REACT_APP_REACT_SCRIPT=start node generate-info.js && react-scripts start",
-    "build:prod01": "REACT_APP_REACT_SCRIPT=production01 node generate-info.js && react-scripts build",
-    "build:test01": "REACT_APP_REACT_SCRIPT=test01 node generate-info.js && react-scripts build",
+    "build:prod01": "REACT_APP_REACT_SCRIPT=production01 node generate-info.js && react-scripts build && rm -f -r build-prod01 && mv build build-prod01",
+    "build:test01": "REACT_APP_REACT_SCRIPT=test01 node generate-info.js && react-scripts build && rm -f -r build-test01 && mv build build-test01",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

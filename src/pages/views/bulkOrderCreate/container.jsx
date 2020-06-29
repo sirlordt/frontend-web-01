@@ -603,7 +603,7 @@ class BulkOrderCreateView extends Component {
             Simulate: this.state.fieldSimulateValue === "1" ? 1 : 0,
 
             EstablishmentId: this.state.fieldEstablishmentValue,
-            DriverId: this.state.fieldDriverValue + "1",
+            DriverId: this.state.fieldDriverValue,
             CreatedAt: this.state.fieldDateValue + " " + this.state.fieldTimeValue,
             Path: uploadResponse.Path,
             FileName: this.state.fieldFileToUploadLabel, //uploadResponse.FileName,

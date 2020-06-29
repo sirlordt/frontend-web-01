@@ -76,6 +76,7 @@ const navigationEntries: any = [
 
       },
 
+      /*
       {
 
         key: "558FEE",
@@ -97,6 +98,7 @@ const navigationEntries: any = [
         icon: "times"
 
       },
+      */
 
     ]
 

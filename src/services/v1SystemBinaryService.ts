@@ -5,7 +5,7 @@ import LoggerManager from "../utils/loggerManager";
 
 //const debug = require( "debug" )( "V1SystemBinaryService" );
 
-import mainStore from '../redux/store';
+//import mainStore from '../redux/store';
 
 class V1SystemBinaryService {
 
@@ -29,9 +29,9 @@ class V1SystemBinaryService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.auth.create" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.auth.create" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/binary/auth";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary/auth";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -93,9 +93,9 @@ class V1SystemBinaryService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.upload" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.binary.upload" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/binary";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/binary";
 
       const callResult = await axios.post( strRequestURL,
                                            body,

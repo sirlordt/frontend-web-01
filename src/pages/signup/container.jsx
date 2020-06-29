@@ -1106,7 +1106,7 @@ class SignupPage extends Component {
 
                       </CFormGroup>
 
-                      <CFormGroup className="mb-2">
+                      <CFormGroup className="mb-4">
 
                         <CLabel
                           className="margin-bottom-0-2-rem"

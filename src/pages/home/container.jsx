@@ -40,7 +40,7 @@ import SystemUtils from "../../utils/systemUtils";
 
 import Content from "../content";
 import SystemBackendClient from "../../services/systemBackendClient";
-import LoggerManager from "../../utils/loggerManager";
+//import LoggerManager from "../../utils/loggerManager";
 
 const Header = React.lazy( () => import( "../../components/header" ) );
 const Footer = React.lazy( () => import( "../../components/footer" ) );

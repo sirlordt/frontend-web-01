@@ -4,7 +4,7 @@ const initialState: any = {
 
   backend: {
 
-    active: process.env.REACT_APP_NODE_SCRIPT === "production01" ? "production01": "test01",
+    active: process.env.REACT_APP_REACT_SCRIPT === "production01" ? "production01": "test01",
 
     servers: {
 

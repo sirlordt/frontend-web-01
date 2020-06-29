@@ -4,7 +4,7 @@ import axios from "axios";
 import LoggerManager from "../utils/loggerManager";
 
 //const debug = require( "debug" )( "V1SystemSecurityAuthenticationService" );
-import mainStore from '../redux/store'
+//import mainStore from '../redux/store';
 
 class V1SystemSecurityAuthenticationService {
 
@@ -44,9 +44,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      let strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -119,9 +119,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.google" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.google" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/google";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/google";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -194,9 +194,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.facebook" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.facebook" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/facebook";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/facebook";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -269,9 +269,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.instagram" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.login.instagram" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/instagram";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/login/instagram";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -327,19 +327,17 @@ class V1SystemSecurityAuthenticationService {
         headers,
         data: null,
 
-        /*
         validateStatus: () => {
 
           return true;
 
         }
-        */
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.token.check" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.token.check" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/token/check";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/token/check";
 
       const callResult = await axios( strRequestURL,
                                       options );
@@ -399,9 +397,9 @@ class V1SystemSecurityAuthenticationService {
 
       };
 
-      const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.logout" ];
+      //const strRequestURL = backend.url[ 0 ] + mainStore.getState().frontend.userActions[ "v1.system.auth.logout" ];
 
-      //const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/logout";
+      const strRequestURL = backend.url[ 0 ] + "/v1/system/security/authentication/logout";
 
       const callResult = await axios( strRequestURL,
                                       options );
