@@ -1,10 +1,15 @@
 import information from "../../../info.json";
+//import LoggerManager from "../../../utils/loggerManager";
+
+//LoggerManager.markLog( "5F68985B9F17", process.env.REACT_APP_SCRIPT );
+//console.log( process.env.REACT_APP_SCRIPT );
 
 const initialState: any = {
 
   backend: {
 
-    active: process.env.REACT_APP_REACT_SCRIPT === "production01" ? "production01": "test01",
+    active: process.env.REACT_APP_SCRIPT === "production01" ? "production01": "test01",
+    //active: "production01",
 
     servers: {
 
@@ -13,7 +18,7 @@ const initialState: any = {
         icon: "server",
         code: "local01",
         name: "Local 01",
-        url: [ "http://127.0.0.1:9090/backend-server-01" ]
+        url: [ "http://127.0.0.1:9090/backend-server-01/domain/api" ]
 
       },
 
@@ -22,7 +27,7 @@ const initialState: any = {
         icon: "server",
         code: "test01",
         name: "Test 01",
-        url: [ "https://test01.odindt.com/kk/api" ]
+        url: [ "https://test01.odindt.com/kk/fl/miami/api" ]
 
       },
 
@@ -31,7 +36,7 @@ const initialState: any = {
         icon: "server",
         code: "production01",
         name: "Production 01",
-        url: [ "https://odindt.com/kk/api" ]
+        url: [ "https://odindt.com/kk/fl/miami/api" ]
 
       }
 

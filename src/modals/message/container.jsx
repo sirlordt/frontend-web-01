@@ -87,13 +87,17 @@ class MessageModal extends Component {
         isOpen={ this.props.showMe }
         className={ this.props.frontend.themeDark ? "no-c-app rounded c-app c-dark-theme" : "no-c-app rounded c-app" }
         toggle={ this.onClickButtonClose }
+
+        //show={ this.props.showMe }
+        //onClose={ this.onClickButtonClose }
         //closeOnBackdrop={ false }
         //backdrop={ false }
         //size="md"
       >
 
-        <ModalHeader toggle={ this.onClickButtonClose }>
+        <ModalHeader toggle={ this.onClickButtonClose }> { /* // */ }
 
+          {/* <CModalTitle></CModalTitle> */}
           { this.props.title }
 
         </ModalHeader>

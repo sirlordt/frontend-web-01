@@ -608,7 +608,8 @@ class BulkOrderCreateView extends Component {
             Path: uploadResponse.Path,
             FileName: this.state.fieldFileToUploadLabel, //uploadResponse.FileName,
             CheckAddressAndCustomer: 1,
-            Backend: process.env.REACT_APP_REACT_SCRIPT === 'production01' ? process.env.REACT_APP_PROD01_ODINV1_PATH: process.env.REACT_APP_TEST01_ODINV1_PATH
+            Backend: process.env.REACT_APP_SCRIPT === "production01" ? process.env.REACT_APP_PROD01_ODINV1_PATH: process.env.REACT_APP_TEST01_ODINV1_PATH
+            //Backend: process.env.REACT_APP_PROD01_ODINV1_PATH
 
           };
 

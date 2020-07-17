@@ -13,11 +13,11 @@ fs.readFile( "src/info.json", function( error, content ) {
 
     const info = JSON.parse( content );
 
-    info.reactScript = process.env.REACT_APP_REACT_SCRIPT;
+    info.reactScript = process.env.REACT_APP_SCRIPT || "";
 
     let strPostfix = "-test01";
 
-    if ( process.env.REACT_APP_REACT_SCRIPT === "production01" ) {
+    if ( process.env.REACT_APP_SCRIPT === "production01" ) {
 
       strPostfix = "-prod01";
 
