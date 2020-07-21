@@ -28,7 +28,7 @@
     "i18next": "^19.4.5",
     "i18next-http-backend": "^1.0.15",
     "jsx-to-string": "^1.4.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "lodash.isfunction": "^3.0.9",
     "lodash.isobject": "^3.0.2",
     "lodash.tonumber": "^4.0.3",
