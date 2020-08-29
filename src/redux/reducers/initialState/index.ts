@@ -27,7 +27,7 @@ const initialState: any = {
         icon: "server",
         code: "test01",
         name: "Test 01",
-        url: [ "https://test01.odindt.com/kk/fl/miami/api" ]
+        url: [ "https://www.weknock-tech.com/test01/odin-v1/kk/fl/miami/api" ]
 
       },
 
@@ -36,7 +36,7 @@ const initialState: any = {
         icon: "server",
         code: "production01",
         name: "Production 01",
-        url: [ "https://odindt.com/kk/fl/miami/api" ]
+        url: [ "https://www.webnock-tech.com/prod01/odin-v1/kk/fl/miami/api" ]
 
       }
 
